@@ -12,9 +12,9 @@ export interface IUsuario {
   indAdm: boolean,
 }
 
-export interface IFilter {
-  filter?: string
-}
+// export interface IFilter {
+//   filter?: string
+// }
 
 export const createValidation = validation((getSchema) => ({
   body: getSchema<IUsuario>(yup.object({
@@ -25,9 +25,9 @@ export const createValidation = validation((getSchema) => ({
     matricula: yup.string().required(),
     indAdm: yup.boolean().default(() => { return false }),
   })),
-  query: getSchema<IFilter>(yup.object({
-    filter: yup.string().optional().min(3).default(''),
-  }))
+  // query: getSchema<IFilter>(yup.object({
+  //   filter: yup.string().optional().min(3).default(''),
+  // }))
 }));
 
 export const create = async (req: Request<{}, {}, IUsuario>, res: Response) => {
