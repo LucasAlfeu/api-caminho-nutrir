@@ -8,6 +8,6 @@ router.get('/', (_, res) => {
   return res.send('Olá, DEV!')
 })
 
-router.post('/usuario', UsuarioController.create);
+router.post('/usuario', UsuarioController.createValidation , UsuarioController.create);
 
 export { router };
