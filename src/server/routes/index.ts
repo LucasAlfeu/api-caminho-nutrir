@@ -9,6 +9,9 @@ router.get('/', (_, res) => {
 })
 
 router.get('/usuario', UsuarioController.getAllValidation , UsuarioController.getAll);
+router.get('/usuario/:id', UsuarioController.getByIdValidation , UsuarioController.getById);
 router.post('/usuario', UsuarioController.createValidation , UsuarioController.create);
+router.put('/usuario/:id', UsuarioController.updateValidation, UsuarioController.update);
+router.delete('/usuario/:id', UsuarioController.deleteByIdValidation, UsuarioController.deleteById);
 
 export { router };
