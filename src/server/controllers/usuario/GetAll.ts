@@ -1,7 +1,7 @@
 import type { Request, RequestHandler, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup'
-import { validation } from "../../shared/middlewares/Validation.js";
+import { validation } from "../../shared/middlewares/Validation";
 
 export interface IQueryProps {
   page?: number | undefined;
@@ -20,5 +20,17 @@ export const getAllValidation = validation((getSchema) => ({
 export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Response) => {
   console.log(req.query)
 
-  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Não implementado!");
+  res.setHeader('x-total-count', '1');
+  res.setHeader('Access-Control-Expose-Headers', 'x-total-count');
+
+  return res.status(StatusCodes.OK).json([
+    {
+      id: 1,
+      nome: 'Lucas Alfeu',
+      usuario: 'lucasalfeu',
+      email: 'teste@teste.com',
+      matricula: '20230011254',
+      indAdm: false
+    }
+  ]);
 }

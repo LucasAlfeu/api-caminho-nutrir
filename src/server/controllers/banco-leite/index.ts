@@ -1,4 +1,4 @@
-import { cadastrarBancoLeite } from "./Create.js"
+import { cadastrarBancoLeite } from "./Create"
 
 
 

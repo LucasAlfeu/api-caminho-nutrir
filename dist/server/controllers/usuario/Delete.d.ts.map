@@ -1,0 +1,1 @@
+{"version":3,"file":"Delete.d.ts","sourceRoot":"","sources":["../../../../src/server/controllers/usuario/Delete.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,cAAc,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAC;AAKjE,MAAM,WAAW,WAAW;IAC1B,EAAE,CAAC,EAAE,MAAM,CAAC;CACb;AAED,eAAO,MAAM,oBAAoB,4HAI9B,CAAC;AAEJ,eAAO,MAAM,UAAU,GAAU,KAAK,OAAO,CAAC,WAAW,CAAC,EAAE,KAAK,QAAQ,gDAIxE,CAAA"}

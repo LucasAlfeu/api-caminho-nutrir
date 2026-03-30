@@ -4,10 +4,9 @@
   "description": "",
   "license": "ISC",
   "author": "Lucas Alfeu da Silva Oliveira",
-  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "dev": "tsx watch src/index.ts"
   },
   "dependencies": {
@@ -22,11 +21,16 @@
     "@eslint/json": "^1.1.0",
     "@eslint/markdown": "^7.5.1",
     "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
+    "@types/supertest": "^7.2.0",
     "eslint": "^10.0.3",
     "globals": "^17.4.0",
+    "jest": "^30.3.0",
+    "supertest": "^7.2.2",
+    "ts-jest": "^29.4.6",
     "ts-node-dev": "^2.0.0",
     "tsx": "^4.21.0",
-    "typescipt": "^1.0.0",
+    "typescript": "^6.0.2",
     "typescript-eslint": "^8.57.0"
   }
 }

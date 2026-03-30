@@ -1,7 +1,7 @@
 import type { Request, RequestHandler, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup'
-import { validation } from "../../shared/middlewares/Validation.js";
+import { validation } from "../../shared/middlewares/Validation";
 
 export interface IUsuario {
   nome: string,
@@ -12,10 +12,6 @@ export interface IUsuario {
   indAdm: boolean,
 }
 
-// export interface IFilter {
-//   filter?: string
-// }
-
 export const createValidation = validation((getSchema) => ({
   body: getSchema<IUsuario>(yup.object({
     nome: yup.string().required().min(3),
@@ -24,14 +20,11 @@ export const createValidation = validation((getSchema) => ({
     email: yup.string().email().required(),
     matricula: yup.string().required(),
     indAdm: yup.boolean().default(() => { return false }),
-  })),
-  // query: getSchema<IFilter>(yup.object({
-  //   filter: yup.string().optional().min(3).default(''),
-  // }))
+  }))
 }));
 
 export const create = async (req: Request<{}, {}, IUsuario>, res: Response) => {
   console.log(req.body)
 
-  return res.send("Create! ");
+  return res.status(StatusCodes.CREATED).json(1).send("Create! ");
 }

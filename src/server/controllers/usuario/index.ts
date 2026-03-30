@@ -1,8 +1,8 @@
-import { create, createValidation } from "./Create.js"
-import { getAll, getAllValidation } from "./GetAll.js"
-import { getById, getByIdValidation} from './GetById.js'
-import { update, updateValidation} from './Update.js'
-import { deleteById, deleteByIdValidation} from './Delete.js'
+import { create, createValidation } from "./Create"
+import { getAll, getAllValidation } from "./GetAll"
+import { getById, getByIdValidation} from './GetById'
+import { update, updateValidation} from './Update'
+import { deleteById, deleteByIdValidation} from './Delete'
 
 
 export const UsuarioController = {

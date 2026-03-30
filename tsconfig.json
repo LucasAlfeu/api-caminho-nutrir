@@ -2,30 +2,39 @@
   "compilerOptions": {
     /* Configurações de Módulo e Saída */
     "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "CommonJS",
+    "moduleResolution": "node", 
+    "ignoreDeprecations": "6.0", 
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "./",
 
-    /* Diagnósticos e Mapas (Úteis para Debug) */
+    /* Diagnósticos e Mapas */
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
 
-    /* Rigor (Mantive os seus e adicionei compatibilidade) */
+    /* Rigor e Compatibilidade */
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
     "isolatedModules": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
+    "verbatimModuleSyntax": false, 
+    "moduleDetection": "auto",
     
     /* Configurações de Ambiente */
     "jsx": "react-jsx",
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "allowJs": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*",
+    "tests/**/*" 
+  ],
+  "exclude": [
+    "node_modules", 
+    "build",
+    "dist"
+  ]
 }

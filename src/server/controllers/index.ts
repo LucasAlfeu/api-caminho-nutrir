@@ -1,2 +1,2 @@
-export * from './usuario/index.js'
-export * from './banco-leite/index.js'
+export * from './usuario'
+export * from './banco-leite'

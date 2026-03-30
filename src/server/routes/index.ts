@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { StatusCodes } from 'http-status-codes';
-import { UsuarioController, BancoLeiteController } from "../controllers/index.js";
+import { UsuarioController, BancoLeiteController } from "../controllers";
 
 const router = Router()
 
@@ -13,5 +13,7 @@ router.get('/usuario/:id', UsuarioController.getByIdValidation , UsuarioControll
 router.post('/usuario', UsuarioController.createValidation , UsuarioController.create);
 router.put('/usuario/:id', UsuarioController.updateValidation, UsuarioController.update);
 router.delete('/usuario/:id', UsuarioController.deleteByIdValidation, UsuarioController.deleteById);
+
+
 
 export { router };

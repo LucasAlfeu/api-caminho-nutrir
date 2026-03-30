@@ -1,0 +1,9 @@
+import express from 'express';
+import 'dotenv/config';
+import './shared/service/TraducoesYup';
+import { router } from './routes/index.js';
+const server = express();
+server.use(express.json());
+server.use(router);
+export { server };
+//# sourceMappingURL=Server.js.map
