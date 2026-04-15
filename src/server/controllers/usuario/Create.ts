@@ -2,18 +2,13 @@ import type { Request, RequestHandler, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup'
 import { validation } from "../../shared/middlewares/Validation";
+import { Knex } from "../../database/knex";
+import { IUsuario } from "../../database/models";
 
-export interface IUsuario {
-  nome: string,
-  usuario: string,
-  senha: string,
-  email: string,
-  matricula: string,
-  indAdm: boolean,
-}
+export interface IBoryProps extends Omit<IUsuario, 'id'> {}
 
 export const createValidation = validation((getSchema) => ({
-  body: getSchema<IUsuario>(yup.object({
+  body: getSchema<IBoryProps>(yup.object({
     nome: yup.string().required().min(3),
     usuario: yup.string().required(),
     senha: yup.string().required().min(6),

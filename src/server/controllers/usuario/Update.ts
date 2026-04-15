@@ -2,15 +2,9 @@ import type { Request, RequestHandler, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup'
 import { validation } from "../../shared/middlewares/Validation";
+import { IUsuario } from "../../database/models";
 
-export interface IBodyProps {
-  nome: string,
-  usuario: string,
-  senha: string,
-  email: string,
-  matricula: string,
-  indAdm: boolean,
-}
+export interface IBodyProps extends Omit<IUsuario, 'id'> { }
 
 export interface IParamProps {
   id?: number;
