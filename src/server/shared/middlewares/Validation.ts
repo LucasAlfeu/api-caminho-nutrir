@@ -10,33 +10,36 @@ type TAllSchemas = Record<TProperty, ObjectSchema<any>>
 type TGetAllSchemas = (getSchema: TGetSchema) => Partial<TAllSchemas>;
 type TValidation = (getAllSchemas: TGetAllSchemas) => RequestHandler
 
-export const validation: TValidation = (getAllSchemas) =>  async (req, res, next) => {
+export const validation: TValidation = (getAllSchemas) => async (req, res, next) => {
   const schemas = getAllSchemas(schema => schema);
+  const errosResult: Record<string, Record<string, string>> = {};
 
-  const errosResult: Record<string, Record<string, string>> = { }
+  const schemasKeys = Object.keys(schemas) as TProperty[];
 
-  Object.entries(schemas).forEach(([key, schema]) => {
+  for (const key of schemasKeys) {
+    const schema = schemas[key];
+    if (!schema) continue;
+
     try {
-      schema.validateSync(req[key as TProperty], { abortEarly: false });
+      await schema.validate(req[key], { abortEarly: false });
     } catch (erro) {
       const yupError = erro as ValidationError;
-      let validationErrors: Record<string, string> = { }
-  
+      const validationErrors: Record<string, string> = {};
+
       yupError.inner.forEach(err => {
-        if(!err.path) return
-  
-        validationErrors[err.path] = err.message
-      })
+        if (!err.path) return;
+        validationErrors[err.path] = err.message;
+      });
 
-      errosResult[key as TProperty] = validationErrors;
+      errosResult[key] = validationErrors;
     }
-  })
-
-  if( Object.entries(errosResult).length === 0) {
-    return next();
-  } else {
-    return res.status(StatusCodes.BAD_REQUEST).json({
-        errors: errosResult
-    })
   }
-}
+
+  if (Object.keys(errosResult).length === 0) {
+    return next();
+  }
+
+  return res.status(StatusCodes.BAD_REQUEST).json({
+    errors: errosResult
+  });
+};

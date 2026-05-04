@@ -4,12 +4,13 @@ import * as yup from 'yup'
 import { validation } from "../../shared/middlewares/Validation";
 import { Knex } from "../../database/knex";
 import { IUsuario } from "../../database/models";
+import { UsuarioProvider } from "../../database/providers/usuario";
 
 export interface IBoryProps extends Omit<IUsuario, 'id'> {}
 
 export const createValidation = validation((getSchema) => ({
   body: getSchema<IBoryProps>(yup.object({
-    nome: yup.string().required().min(3),
+    nome: yup.string().required().min(3).max(20),
     usuario: yup.string().required(),
     senha: yup.string().required().min(6),
     email: yup.string().email().required(),
@@ -19,7 +20,15 @@ export const createValidation = validation((getSchema) => ({
 }));
 
 export const create = async (req: Request<{}, {}, IUsuario>, res: Response) => {
-  console.log(req.body)
+  const result = await UsuarioProvider.create(req.body)
 
-  return res.status(StatusCodes.CREATED).json(1).send("Create! ");
+  if(result instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message
+      }
+    });
+  }
+
+  return res.status(StatusCodes.CREATED).json(result);
 }
