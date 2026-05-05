@@ -2,6 +2,7 @@ import type { Request, RequestHandler, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup'
 import { validation } from "../../shared/middlewares/Validation";
+import { UsuarioProvider } from "../../database/providers/usuario";
 
 export interface IParamProps {
   id?: number;
@@ -14,24 +15,23 @@ export const getByIdValidation = validation((getSchema) => ({
 }));
 
 export const getById = async (req: Request<IParamProps>, res: Response) => {
-  console.log(req.params)
-  const id = Number(req.params.id);
-  console.log(req.params);
+ if(!req.params.id) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      errors: {
+        default: 'O parâmetro "id" precisa ser informado'
+      }
+    })
+  }
 
-  if (id === 99999) {
+  const result = await UsuarioProvider.getById(req.params.id);
+
+  if(result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       errors: {
-        default: 'Registro não encontrado'
+        default: result.message
       }
     });
   }
 
-  return res.status(StatusCodes.OK).json({
-    id: id,
-    nome: 'Lucas Alfeu',
-    usuario: 'lucasalfeu',
-    email: 'teste@teste.com',
-    matricula: '20230011254',
-    indAdm: false
-  });
+  return res.status(StatusCodes.OK).json(result);
 }

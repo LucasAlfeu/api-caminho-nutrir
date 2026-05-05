@@ -3,6 +3,7 @@ import { getAll } from "./GetAll"
 import { getById } from './GetById'
 import { deleteById } from './DeleteById'
 import { updateById } from "./UpdateById"
+import { count } from "./Count"
 
 
 export const UsuarioProvider = {
@@ -11,4 +12,5 @@ export const UsuarioProvider = {
   getById: getById,
   updateById: updateById, 
   deleteById: deleteById,
+  count: count
 }

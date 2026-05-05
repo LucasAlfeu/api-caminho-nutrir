@@ -6,8 +6,13 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
   try {
     const result = await Knex(ETableNames.usuario)
       .select("*")
-      .where('id', Number(id))
-      .orWhere('nome', 'like', `%${filter}%`)
+      .where(qb => {
+        if (id > 0) {
+            qb.where('id', id).orWhere('nome', 'like', `%${filter}%`);
+        } else {
+            qb.where('nome', 'like', `%${filter}%`);
+        }
+      })
       .offset((page - 1) * limit)
       .limit(limit);
 
@@ -17,11 +22,12 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
         .where('id', '=', id)
         .first();
       
-      if(resultById) return [...result, resultById]
+      if (resultById) return [...result, resultById];
     }
-    return result
+
+    return result;
   } catch (error) {
-    console.log(error)
-    return new Error('Erro ao consulta os registros')
+    console.error(error);
+    return new Error('Erro ao consultar os registros');
   }
-}
+};
