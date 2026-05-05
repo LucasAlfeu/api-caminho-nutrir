@@ -1,18 +1,14 @@
 import { create } from "./Create"
-// import { getAll, getAllValidation } from "./GetAll"
-// import { getById, getByIdValidation} from './GetById'
-// import { update, updateValidation} from './Update'
-// import { deleteById, deleteByIdValidation} from './Delete'
+import { getAll } from "./GetAll"
+import { getById } from './GetById'
+import { deleteById } from './DeleteById'
+import { updateById } from "./UpdateById"
 
 
 export const UsuarioProvider = {
   create: create,
-  // getAll: getAll,
-  // getAllValidation: getAllValidation,
-  // getById: getById,
-  // getByIdValidation: getByIdValidation,
-  // update: update, 
-  // updateValidation: updateValidation,
-  // deleteById: deleteById,
-  // deleteByIdValidation: deleteByIdValidation,
+  getAll: getAll,
+  getById: getById,
+  updateById: updateById, 
+  deleteById: deleteById,
 }
