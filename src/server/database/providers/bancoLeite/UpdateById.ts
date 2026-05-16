@@ -4,7 +4,7 @@ import { ETableNames } from "../../ETable";
 
 export const updateById = async (id: number, bancoLeite: Omit<IBancoLeite, 'id'>): Promise<void | Error> => {
   try {
-    const result = await Knex(ETableNames.usuario)
+    const result = await Knex(ETableNames.bancoLeite)
       .update(bancoLeite)
       .where('id', '=', id);
 

@@ -11,7 +11,7 @@ export interface IParamProps {
   id?: number;
 }
 
-export const createValidation = validation((getSchema) => ({
+export const updateValidation = validation((getSchema) => ({
   body: getSchema<IBodyProps>(yup.object({
     nome: yup.string().required().min(3).max(150),
     descricao: yup.string().default("").optional().max(300),
@@ -19,9 +19,9 @@ export const createValidation = validation((getSchema) => ({
     logradouro: yup.string().required(),
     bairro: yup.string().required(),
     numero: yup.string().required(),
-    complemento: yup.string().default("").optional().min(3).max(150),
-    municipio: yup.string().required().min(3).max(150),
-    uf: yup.string().required().min(2).max(3),
+    complemento: yup.string().default("").optional(),
+    municipio: yup.string().required(),
+    uf: yup.string().required(),
     longitude: yup.string().required(),
     latitude: yup.string().required(),
   }))
