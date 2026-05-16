@@ -1,15 +1,18 @@
-import type { Request, Response } from "express";
-import { IBancoLeite } from "../../database/models";
-import { validation } from "../../shared/middlewares/Validation";
-import * as yup from 'yup'
-import { BancoLeiteProvider } from "../../database/providers/bancoLeite";
+import type { Request, RequestHandler, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import * as yup from 'yup'
+import { validation } from "../../shared/middlewares/Validation";
+import { IBancoLeite } from "../../database/models";
+import { BancoLeiteProvider } from "../../database/providers/bancoLeite";
 
+export interface IBodyProps extends Omit<IBancoLeite, 'id'> { }
 
-export interface IBoryProps extends Omit<IBancoLeite, 'id'> {}
+export interface IParamProps {
+  id?: number;
+}
 
 export const createValidation = validation((getSchema) => ({
-  body: getSchema<IBoryProps>(yup.object({
+  body: getSchema<IBodyProps>(yup.object({
     nome: yup.string().required().min(3).max(150),
     descricao: yup.string().default("").optional().max(300),
     cep: yup.string().required().min(8).max(8),
@@ -24,8 +27,17 @@ export const createValidation = validation((getSchema) => ({
   }))
 }));
 
-export const create = async (req: Request<{}, {}, IBancoLeite>, res: Response) => {
-  const result = await BancoLeiteProvider.create(req.body)
+
+export const update = async (req: Request<IParamProps, {}, IBodyProps>, res: Response) => {
+  if(!req.params.id) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      errors: {
+        default: 'O parâmetro "id" precisa ser informado'
+      }
+    })
+  }
+
+  const result = await BancoLeiteProvider.updateById(req.params.id, req.body);
 
   if(result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -35,5 +47,5 @@ export const create = async (req: Request<{}, {}, IBancoLeite>, res: Response) =
     });
   }
 
-  return res.status(StatusCodes.CREATED).json(result);
+  return res.status(StatusCodes.NO_CONTENT).json(result);
 }
