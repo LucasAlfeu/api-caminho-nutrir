@@ -1,0 +1,14 @@
+export interface IBancoLeite {
+  id: number,
+  nome: string,
+  descricao: string,
+  cep: string,
+  logradouro: string,
+  bairro: string,
+  numero: string,
+  complemento: string,
+  municipio: string,
+  uf: string,
+  longitude: string,
+  latitude: string,
+}
