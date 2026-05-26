@@ -5,11 +5,11 @@ import { ETableNames } from "../ETable";
 export async function up(knex: Knex) {
   return knex.schema.createTable(ETableNames.usuario, table => {
     table.bigIncrements('id').primary().index();
-    table.string('nome', 20).checkLength('<=', 20).index().notNullable();
-    table.string('usuario').index().notNullable();
-    table.string('email').index().notNullable();
-    table.string('senha').index().notNullable();
-    table.string('matricula').index().notNullable();
+    table.string('nome').checkLength('>', 3).notNullable();
+    table.string('usuario').checkLength('>', 6).index().unique().notNullable();
+    table.string('email').unique().index().notNullable();
+    table.string('senha').notNullable();
+    table.string('matricula').unique().index().notNullable();
   })
 
   .then(() => {
