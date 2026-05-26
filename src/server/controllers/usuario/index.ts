@@ -3,11 +3,14 @@ import { getAll, getAllValidation } from "./GetAll"
 import { getById, getByIdValidation} from './GetById'
 import { update, updateValidation} from './Update'
 import { deleteById, deleteByIdValidation} from './Delete'
+import { singIn, singInValidation } from "./SingIn"
 
 
 export const UsuarioController = {
   create: create,
   createValidation: createValidation,
+  singIn: singIn,
+  singInValidation: singInValidation,
   getAll: getAll,
   getAllValidation: getAllValidation,
   getById: getById,

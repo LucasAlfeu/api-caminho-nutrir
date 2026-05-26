@@ -10,10 +10,11 @@ router.get('/', (_, res) => {
 
 router.get('/usuario', UsuarioController.getAllValidation , UsuarioController.getAll);
 router.get('/usuario/:id', UsuarioController.getByIdValidation , UsuarioController.getById);
-router.post('/usuario', UsuarioController.createValidation , UsuarioController.create);
 router.put('/usuario/:id', UsuarioController.updateValidation, UsuarioController.update);
 router.delete('/usuario/:id', UsuarioController.deleteByIdValidation, UsuarioController.deleteById);
 
+router.post('/cadastra', UsuarioController.createValidation , UsuarioController.create);
+router.post('/entrar', UsuarioController.singInValidation , UsuarioController.singIn);
 
 router.get('/banco-leite', BancoLeiteController.getAllValidation , BancoLeiteController.getAll);
 router.get('/banco-leite/:id', BancoLeiteController.getByIdValidation , BancoLeiteController.getById);
