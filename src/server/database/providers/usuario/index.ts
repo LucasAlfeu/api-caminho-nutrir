@@ -4,14 +4,14 @@ import { getById } from './GetById'
 import { deleteById } from './DeleteById'
 import { updateById } from "./UpdateById"
 import { count } from "./Count"
-import { getByEmail } from "./GetByEmail"
+import { getByUsuario } from "./GetByUsuario"
 
 
 export const UsuarioProvider = {
   create: create,
   getAll: getAll,
   getById: getById,
-  getByEmail: getByEmail,
+  getByUsuario: getByUsuario,
   updateById: updateById, 
   deleteById: deleteById,
   count: count

@@ -11,11 +11,12 @@ export interface IBoryProps extends Omit<IUsuario, 'id'> {}
 export const createValidation = validation((getSchema) => ({
   body: getSchema<IBoryProps>(yup.object({
     nome: yup.string().required().min(3).max(150),
-    usuario: yup.string().required().max(20),
+    usuario: yup.string().required(),
     senha: yup.string().required().min(6),
-    email: yup.string().email().required(),
+    email: yup.string().email().email().required(),
     matricula: yup.string().required(),
     indAdm: yup.boolean().default(() => { return false }),
+    indLiberado: yup.boolean().default(() => { return false }),
   }))
 }));
 

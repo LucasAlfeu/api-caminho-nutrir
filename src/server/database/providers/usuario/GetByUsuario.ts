@@ -3,11 +3,11 @@ import { IUsuario } from "../../models";
 import { ETableNames } from "../../ETable";
 
 
-export const getByEmail = async (email: string): Promise<IUsuario | Error> => {
+export const getByUsuario = async (usuario: string): Promise<IUsuario | Error> => {
   try {
     const result = await Knex(ETableNames.usuario)
       .select('*')
-      .where('email', '=', email)
+      .where('usuario', '=', usuario)
       .first();
     
     if(result) return result;
