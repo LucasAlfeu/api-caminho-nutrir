@@ -13,7 +13,7 @@ router.get('/usuario/:id', UsuarioController.getByIdValidation , UsuarioControll
 router.put('/usuario/:id', UsuarioController.updateValidation, UsuarioController.update);
 router.delete('/usuario/:id', UsuarioController.deleteByIdValidation, UsuarioController.deleteById);
 
-router.post('/cadastra', UsuarioController.createValidation , UsuarioController.create);
+router.post('/cadastrar', UsuarioController.createValidation , UsuarioController.create);
 router.post('/entrar', UsuarioController.singInValidation , UsuarioController.singIn);
 
 router.get('/banco-leite', BancoLeiteController.getAllValidation , BancoLeiteController.getAll);
