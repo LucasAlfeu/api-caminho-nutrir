@@ -4,6 +4,7 @@ import * as yup from 'yup'
 import { validation } from "../../shared/middlewares/Validation";
 import { IUsuario } from "../../database/models";
 import { UsuarioProvider } from "../../database/providers/usuario";
+import { PasswordCrypto } from "../../shared/service";
 
 export interface IBoryProps extends Omit<IUsuario, 'id' | 'nome' | 'matricula' | 'email' | 'indAdm' | 'indLiberado'> {}
 
@@ -29,7 +30,9 @@ export const singIn = async (req: Request<{}, {}, IBoryProps>, res: Response) =>
     });
   }
 
-  if(senha !== result.senha) {
+  const passwordMatch = await PasswordCrypto.verifyPassword(senha, result.senha)
+
+  if(!passwordMatch) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       errors: {
         default: 'Usuário ou senha inválidos'
