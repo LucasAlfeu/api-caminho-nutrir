@@ -34,6 +34,7 @@ export const development: Knex.Config = {
     user: process.env.BD_USER as string,
     password: process.env.BD_PASSWORD as string,
     database: process.env.BD_NAME as string,
+    ssl: { rejectUnauthorized: false }
   },
 }
 
@@ -49,5 +50,7 @@ export const production: Knex.Config = {
     user: process.env.BD_USER as string,
     password: process.env.BD_PASSWORD as string,
     database: process.env.BD_NAME as string,
+    port: Number(process.env.BD_PORT ?? 3306),
+    ssl: { rejectUnauthorized: false }
   }
 }
