@@ -4,5 +4,7 @@ export interface IUsuario {
 	usuario: string,
 	senha: string,
 	email: string,
-	matricula: string
+	matricula: string,
+  indAdm: boolean,
+  indLiberado: boolean,
 }

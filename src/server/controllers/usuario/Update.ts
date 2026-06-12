@@ -5,7 +5,7 @@ import { validation } from "../../shared/middlewares/Validation";
 import { IUsuario } from "../../database/models";
 import { UsuarioProvider } from "../../database/providers/usuario";
 
-export interface IBodyProps extends Omit<IUsuario, 'id'> { }
+export interface IBodyProps extends Omit<IUsuario, 'id' | 'indAdm' | 'indLiberado'> { }
 
 export interface IParamProps {
   id?: number;
@@ -18,7 +18,6 @@ export const updateValidation = validation((getSchema) => ({
     senha: yup.string().required().min(6),
     email: yup.string().email().required(),
     matricula: yup.string().required(),
-    indAdm: yup.boolean().default(() => { return false }),
   })),
   params: getSchema<IParamProps>(yup.object({
     id: yup.number().required().moreThan(0),
