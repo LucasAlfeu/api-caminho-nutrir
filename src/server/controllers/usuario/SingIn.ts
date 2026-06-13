@@ -51,7 +51,16 @@ export const singIn = async (req: Request<{}, {}, IBoryProps>, res: Response) =>
     }
 
 
-    return res.status(StatusCodes.OK).json({ accessToken:  accessToken})
+    return res.status(StatusCodes.OK).json({ 
+      accessToken:  accessToken, 
+      email: result.email,
+      id: result.id,
+      usuario: result.usuario,
+      nome: result.nome,
+      matricula: result.matricula,
+      indAdm: result.indAdm,
+      indLiberado: result.indLiberado,
+    })
   }
 
 }
