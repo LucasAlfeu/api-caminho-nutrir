@@ -11,4 +11,5 @@ export interface IBancoLeite {
   uf: string,
   longitude: string,
   latitude: string,
+  dataUltimaAtualizacao: string,
 }

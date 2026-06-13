@@ -24,6 +24,7 @@ export const updateValidation = validation((getSchema) => ({
     uf: yup.string().required(),
     longitude: yup.string().required(),
     latitude: yup.string().required(),
+    dataUltimaAtualizacao: yup.string().required(),    
   }))
 }));
 

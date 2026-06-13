@@ -17,8 +17,8 @@ router.delete('/usuario/:id', ensureAuthenticated, UsuarioController.deleteByIdV
 router.post('/cadastrar', UsuarioController.createValidation , UsuarioController.create);
 router.post('/entrar', UsuarioController.singInValidation , UsuarioController.singIn);
 
-router.get('/banco-leite', ensureAuthenticated, BancoLeiteController.getAllValidation , BancoLeiteController.getAll);
-router.get('/banco-leite/:id', ensureAuthenticated, BancoLeiteController.getByIdValidation , BancoLeiteController.getById);
+router.get('/banco-leite', BancoLeiteController.getAllValidation , BancoLeiteController.getAll);
+router.get('/banco-leite/:id', BancoLeiteController.getByIdValidation , BancoLeiteController.getById);
 router.post('/banco-leite', ensureAuthenticated, BancoLeiteController.createValidation , BancoLeiteController.create);
 router.put('/banco-leite/:id', ensureAuthenticated, BancoLeiteController.updateValidation, BancoLeiteController.update);
 router.delete('/banco-leite/:id', ensureAuthenticated, BancoLeiteController.deleteByIdValidation, BancoLeiteController.deleteById);

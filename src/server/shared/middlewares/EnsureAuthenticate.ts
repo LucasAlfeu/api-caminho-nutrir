@@ -22,8 +22,9 @@ export const ensureAuthenticated: RequestHandler = async(req, res, next) => {
       errors: { default: 'Não autenticado'}
     })
   }
-
+  console.log(token)
   const jwtData = JWTService.verify(token);
+  console.log(jwtData)
 
   if(jwtData === 'JWT_SECRET_NOT_FOUND') {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

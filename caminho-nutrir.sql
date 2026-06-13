@@ -26,6 +26,7 @@ CREATE TABLE Usuario(
   usuario VARCHAR(100) NOT NULL UNIQUE,
   email VARCHAR(255) NOT NULL UNIQUE,
   senha VARCHAR(255) NOT NULL,
+  dataUltimaAtualizacao VARCHAR(255) NOT NULL,
   CONSTRAINT pk_usuario PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
