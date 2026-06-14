@@ -2,15 +2,17 @@ import { Knex } from "../../knex"
 import { IUsuario } from "../../models";
 import { ETableNames } from "../../ETable";
 
-export const getAll = async (page: number, limit: number, filter: string, id = 0): Promise<IUsuario[] | Error> => {
+type TUsuarioListagem = Omit<IUsuario, 'usuario' | 'senha' | 'email'>;
+
+export const getAll = async (page: number, limit: number, filter: string, id = 0): Promise<TUsuarioListagem[] | Error> => {
   try {
     const result = await Knex(ETableNames.usuario)
-      .select("*")
+      .select<TUsuarioListagem[]>('id', 'nome', 'matricula', 'indLiberado', 'indAdm')
       .where(qb => {
         if (id > 0) {
-            qb.where('id', id).orWhere('nome', 'like', `%${filter}%`);
+          qb.where('id', id).orWhere('nome', 'like', `%${filter}%`);
         } else {
-            qb.where('nome', 'like', `%${filter}%`);
+          qb.where('nome', 'like', `%${filter}%`);
         }
       })
       .offset((page - 1) * limit)
@@ -18,7 +20,7 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
 
     if (id > 0 && result.every(item => item.id !== id)) {
       const resultById = await Knex(ETableNames.usuario)
-        .select('*')
+        .select<TUsuarioListagem>('id', 'nome', 'matricula', 'indLiberado', 'indAdm')
         .where('id', '=', id)
         .first();
       
