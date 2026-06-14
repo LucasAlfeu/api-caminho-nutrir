@@ -13,6 +13,7 @@ router.get('/usuario', ensureAuthenticated, UsuarioController.getAllValidation ,
 router.get('/usuario/:id', ensureAuthenticated, UsuarioController.getByIdValidation , UsuarioController.getById);
 router.put('/usuario/:id', ensureAuthenticated, UsuarioController.updateValidation, UsuarioController.update);
 router.delete('/usuario/:id', ensureAuthenticated, UsuarioController.deleteByIdValidation, UsuarioController.deleteById);
+router.put('/usuario/:id/liberar-usuario', ensureAuthenticated, UsuarioController.enableUserByIdValidation, UsuarioController.enableUserById);
 
 router.post('/cadastrar', UsuarioController.createValidation , UsuarioController.create);
 router.post('/entrar', UsuarioController.singInValidation , UsuarioController.singIn);

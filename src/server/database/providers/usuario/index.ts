@@ -5,6 +5,7 @@ import { deleteById } from './DeleteById'
 import { updateById } from "./UpdateById"
 import { count } from "./Count"
 import { getByUsuario } from "./GetByUsuario"
+import { enableUserById } from "./EnableUserById"
 
 
 export const UsuarioProvider = {
@@ -14,5 +15,6 @@ export const UsuarioProvider = {
   getByUsuario: getByUsuario,
   updateById: updateById, 
   deleteById: deleteById,
-  count: count
+  count: count,
+  enableUserById: enableUserById,
 }
