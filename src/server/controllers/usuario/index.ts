@@ -6,6 +6,7 @@ import { deleteById, deleteByIdValidation} from './Delete'
 import { singIn, singInValidation } from "./SingIn"
 import { enableUserById, enableUserByIdValidation } from "./EnableUserById"
 import { becomeAdmById, becomeAdmByIdValidation } from "./BecomeAdm"
+import { disableUserById, disableUserByIdValidation } from "./DisableUserById"
 
 
 export const UsuarioController = {
@@ -24,5 +25,7 @@ export const UsuarioController = {
   enableUserById: enableUserById,
   enableUserByIdValidation: enableUserByIdValidation,
   becomeAdmById: becomeAdmById,
-  becomeAdmByIdValidation: becomeAdmByIdValidation
+  becomeAdmByIdValidation: becomeAdmByIdValidation,
+  disableUserById: disableUserById,
+  disableUserByIdValidation: disableUserByIdValidation,
 }
