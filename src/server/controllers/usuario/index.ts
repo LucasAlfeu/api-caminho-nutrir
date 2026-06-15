@@ -7,6 +7,7 @@ import { singIn, singInValidation } from "./SingIn"
 import { enableUserById, enableUserByIdValidation } from "./EnableUserById"
 import { becomeAdmById, becomeAdmByIdValidation } from "./BecomeAdm"
 import { disableUserById, disableUserByIdValidation } from "./DisableUserById"
+import { resetPassword, resetPasswordValidation } from "./ResetPassword"
 
 
 export const UsuarioController = {
@@ -28,4 +29,6 @@ export const UsuarioController = {
   becomeAdmByIdValidation: becomeAdmByIdValidation,
   disableUserById: disableUserById,
   disableUserByIdValidation: disableUserByIdValidation,
+  resetPassword: resetPassword,
+  resetPasswordValidation: resetPasswordValidation,
 }

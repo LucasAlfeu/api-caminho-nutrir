@@ -19,6 +19,7 @@ router.delete('/usuario/:id', ensureAuthenticated, UsuarioController.deleteByIdV
 
 router.post('/cadastrar', UsuarioController.createValidation , UsuarioController.create);
 router.post('/entrar', UsuarioController.singInValidation , UsuarioController.singIn);
+router.put('/recuperar-senha', UsuarioController.resetPasswordValidation , UsuarioController.resetPassword);
 
 router.get('/banco-leite', BancoLeiteController.getAllValidation , BancoLeiteController.getAll);
 router.get('/banco-leite/:id', BancoLeiteController.getByIdValidation , BancoLeiteController.getById);

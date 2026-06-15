@@ -8,6 +8,7 @@ import { getByUsuario } from "./GetByUsuario"
 import { enableUserById } from "./EnableUserById"
 import { becomeAdmById } from "./BecomeAdm"
 import { disableUserById } from "./DesableUserById"
+import { resetPassword } from "./ResetPassword"
 
 
 export const UsuarioProvider = {
@@ -20,5 +21,6 @@ export const UsuarioProvider = {
   count: count,
   enableUserById: enableUserById,
   becomeAdmById: becomeAdmById,
-  disableUserById: disableUserById
+  disableUserById: disableUserById,
+  resetPassword: resetPassword,
 }
