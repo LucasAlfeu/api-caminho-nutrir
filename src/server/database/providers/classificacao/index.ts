@@ -6,7 +6,7 @@ import { updateById } from "./UpdateById";
 
 
 
-export const ClassificacaoBancoLeiteProvider = {
+export const ClassificacaoProvider = {
   create: create,
   getAll: getAll,
   updateById: updateById,

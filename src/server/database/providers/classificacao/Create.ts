@@ -1,10 +1,10 @@
 import { ETableNames } from "../../ETable";
 import { Knex } from "../../knex";
-import { IClassificacaoBancoLeite } from "../../models";
+import { IClassificacao } from "../../models";
 
-export const create = async (classificacaoBancoLeite: Omit<IClassificacaoBancoLeite, 'id'>): Promise<number | Error> => {
+export const create = async (classificacao: Omit<IClassificacao, 'id'>): Promise<number | Error> => {
   try {
-    const [result] = await Knex(ETableNames.classificacaoBancoLeite).insert(classificacaoBancoLeite).returning('id');
+    const [result] = await Knex(ETableNames.classificacao).insert(classificacao).returning('id');
 
     if(typeof result === 'object') {
       return result.id

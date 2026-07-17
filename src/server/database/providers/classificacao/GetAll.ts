@@ -1,10 +1,10 @@
 import { Knex } from "../../knex"
-import { IClassificacaoBancoLeite } from "../../models";
+import { IClassificacao } from "../../models";
 import { ETableNames } from "../../ETable";
 
-export const getAll = async (page: number, limit: number, filter: string, id = 0): Promise<IClassificacaoBancoLeite[] | Error> => {
+export const getAll = async (page: number, limit: number, filter: string, id = 0): Promise<IClassificacao[] | Error> => {
   try {
-    const result = await Knex(ETableNames.classificacaoBancoLeite)
+    const result = await Knex(ETableNames.classificacao)
       .select("*")
       .where(qb => {
         if (id > 0) {
@@ -17,7 +17,7 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
       .limit(limit);
 
     if (id > 0 && result.every(item => item.id !== id)) {
-      const resultById = await Knex(ETableNames.classificacaoBancoLeite)
+      const resultById = await Knex(ETableNames.classificacao)
         .select('*')
         .where('id', '=', id)
         .first();

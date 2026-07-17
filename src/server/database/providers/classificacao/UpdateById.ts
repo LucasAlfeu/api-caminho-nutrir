@@ -1,11 +1,11 @@
 import { Knex } from "../../knex"
-import { IClassificacaoBancoLeite } from "../../models";
+import { IClassificacao } from "../../models";
 import { ETableNames } from "../../ETable";
 
-export const updateById = async (id: number, classificacaoBancoLeite: Omit<IClassificacaoBancoLeite, 'id'>): Promise<void | Error> => {
+export const updateById = async (id: number, classificacao: Omit<IClassificacao, 'id'>): Promise<void | Error> => {
   try {
-    const result = await Knex(ETableNames.classificacaoBancoLeite)
-      .update(classificacaoBancoLeite)
+    const result = await Knex(ETableNames.classificacao)
+      .update(classificacao)
       .where('id', '=', id);
 
     if(result > 0) return;

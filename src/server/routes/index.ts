@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { StatusCodes } from 'http-status-codes';
 import { UsuarioController, EstacaoController } from "../controllers";
 import { ensureAuthenticated } from "../shared/middlewares";
 
@@ -9,6 +8,8 @@ router.get('/', (_, res) => {
   return res.send('Olá, DEV!')
 })
 
+// URL referente ao usuário
+
 router.get('/usuario', ensureAuthenticated, UsuarioController.getAllValidation , UsuarioController.getAll);
 router.get('/usuario/:id', ensureAuthenticated, UsuarioController.getByIdValidation , UsuarioController.getById);
 router.put('/usuario/:id/habilitar', ensureAuthenticated, UsuarioController.enableUserByIdValidation, UsuarioController.enableUserById);
@@ -17,9 +18,13 @@ router.put('/usuario/:id/tornar-administrador', ensureAuthenticated, UsuarioCont
 router.put('/usuario/:id', ensureAuthenticated, UsuarioController.updateValidation, UsuarioController.update);
 router.delete('/usuario/:id', ensureAuthenticated, UsuarioController.deleteByIdValidation, UsuarioController.deleteById);
 
+// URL referente as credenciais do usuário
+
 router.post('/cadastrar', UsuarioController.createValidation , UsuarioController.create);
 router.post('/entrar', UsuarioController.singInValidation , UsuarioController.singIn);
 router.put('/recuperar-senha', UsuarioController.resetPasswordValidation , UsuarioController.resetPassword);
+
+// URL referente as estações
 
 router.get('/banco-leite', EstacaoController.getAllValidation , EstacaoController.getAll);
 router.get('/banco-leite/:id', EstacaoController.getByIdValidation , EstacaoController.getById);

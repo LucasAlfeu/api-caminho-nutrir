@@ -4,7 +4,7 @@ import { ETableNames } from "../../ETable";
 
 export const count = async (filter = ''): Promise<number | Error> => {
   try {
-    const result = await Knex(ETableNames.classificacaoBancoLeite)
+    const result = await Knex(ETableNames.classificacao)
       .where('nome', 'like', `%${filter}%`)
       .count<[{ count: string | number }]>('* as count')
       .first();

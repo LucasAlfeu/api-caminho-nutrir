@@ -2,10 +2,10 @@ import type { Request, RequestHandler, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup'
 import { validation } from "../../shared/middlewares/Validation";
-import { IClassificacaoBancoLeite } from "../../database/models";
-import { ClassificacaoBancoLeiteProvider } from "../../database/providers/classificacaoBancoLeite";
+import { IClassificacao } from "../../database/models";
+import { ClassificacaoProvider } from "../../database/providers/classificacao";
 
-export interface IBodyProps extends Omit<IClassificacaoBancoLeite, 'id' | 'indAdm' | 'indLiberado' | 'senha'> {
+export interface IBodyProps extends Omit<IClassificacao, 'id' | 'indAdm' | 'indLiberado' | 'senha'> {
   senha?: string;
 }
 
@@ -32,7 +32,7 @@ export const update = async (req: Request<IParamProps, {}, IBodyProps>, res: Res
     });
   }
 
-  const result = await ClassificacaoBancoLeiteProvider.updateById(req.params.id, req.body);
+  const result = await ClassificacaoProvider.updateById(req.params.id, req.body);
 
   if(result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

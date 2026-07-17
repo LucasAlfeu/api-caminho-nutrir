@@ -4,7 +4,7 @@ import { update, updateValidation} from './Update'
 import { deleteById, deleteByIdValidation} from './Delete'
 
 
-export const classificacaoBancoLeiteController = {
+export const classificacaoController = {
   create: create,
   createValidation: createValidation,
   getAll: getAll,

@@ -4,7 +4,7 @@ import { Knex } from "../../knex"
 
 export const deleteById = async(id: number): Promise<void | Error> => {
   try{
-    const result = await Knex(ETableNames.classificacaoBancoLeite)
+    const result = await Knex(ETableNames.classificacao)
       .where('id', '=', id)
       .del()
     

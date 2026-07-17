@@ -2,10 +2,10 @@ import type { Request, RequestHandler, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup'
 import { validation } from "../../shared/middlewares/Validation";
-import { IClassificacaoBancoLeite } from "../../database/models";
-import { ClassificacaoBancoLeiteProvider } from "../../database/providers/classificacaoBancoLeite";
+import { IClassificacao } from "../../database/models";
+import { ClassificacaoProvider } from "../../database/providers/classificacao";
 
-export interface IBoryProps extends Omit<IClassificacaoBancoLeite, 'id'> {}
+export interface IBoryProps extends Omit<IClassificacao, 'id'> {}
 
 export const createValidation = validation((getSchema) => ({
   body: getSchema<IBoryProps>(yup.object({
@@ -14,8 +14,8 @@ export const createValidation = validation((getSchema) => ({
   }))
 }));
 
-export const create = async (req: Request<{}, {}, IClassificacaoBancoLeite>, res: Response) => {
-  const result = await ClassificacaoBancoLeiteProvider.create(req.body)
+export const create = async (req: Request<{}, {}, IClassificacao>, res: Response) => {
+  const result = await ClassificacaoProvider.create(req.body)
 
   if(result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

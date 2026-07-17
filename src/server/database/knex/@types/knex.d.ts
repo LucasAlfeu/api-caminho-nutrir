@@ -1,10 +1,10 @@
-import { IBancoLeite, IUsuario } from "../../models"
-import { IClassificacaoBancoLeite } from "../../models/Classificacao"
+import { IEstacao, IUsuario } from "../../models"
+import { IClassificacao } from "../../models/Classificacao"
 
 declare module 'knex/types/tables' {
   interface Tables {
     usuario: IUsuario,
-    bancoLeite: IBancoLeite,
-    classificacaoBancoLeite:  IClassificacaoBancoLeite
+    estacao: IEstacao,
+    classificacao:  IClassificacao
   }
 }

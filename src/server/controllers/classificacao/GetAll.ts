@@ -2,7 +2,7 @@ import type { Request, RequestHandler, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup'
 import { validation } from "../../shared/middlewares/Validation";
-import { ClassificacaoBancoLeiteProvider } from "../../database/providers/classificacaoBancoLeite";
+import { ClassificacaoProvider } from "../../database/providers/classificacao";
 
 export interface IQueryProps {
   id?: number | undefined
@@ -21,13 +21,13 @@ export const getAllValidation = validation((getSchema) => ({
 }));
 
 export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Response) => {
-  const result = await ClassificacaoBancoLeiteProvider.getAll(
+  const result = await ClassificacaoProvider.getAll(
     req.query.page || 1, 
     req.query.limit || 10, 
     req.query.filter || '', 
     req.query.id ? Number(req.query.id) : 0
   )
-  const count = await ClassificacaoBancoLeiteProvider.count(req.query.filter)
+  const count = await ClassificacaoProvider.count(req.query.filter)
 
   if(result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

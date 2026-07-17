@@ -2,7 +2,7 @@ import type { Request, RequestHandler, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup'
 import { validation } from "../../shared/middlewares/Validation";
-import { ClassificacaoBancoLeiteProvider } from "../../database/providers/classificacaoBancoLeite";
+import { ClassificacaoProvider } from "../../database/providers/classificacao";
 
 export interface IParamProps {
   id?: number;
@@ -24,7 +24,7 @@ export const deleteById = async (req: Request<IParamProps>, res: Response) => {
     })
   }
 
-  const result = await ClassificacaoBancoLeiteProvider.deleteById(req.params.id);
+  const result = await ClassificacaoProvider.deleteById(req.params.id);
 
   if(result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
