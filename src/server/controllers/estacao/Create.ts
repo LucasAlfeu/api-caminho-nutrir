@@ -1,12 +1,12 @@
 import type { Request, Response } from "express";
-import { IBancoLeite } from "../../database/models";
+import { IEstacao } from "../../database/models";
 import { validation } from "../../shared/middlewares/Validation";
 import * as yup from 'yup'
-import { BancoLeiteProvider } from "../../database/providers/bancoLeite";
+import { EstacaoProvider } from "../../database/providers/estacao";
 import { StatusCodes } from "http-status-codes";
 
 
-export interface IBoryProps extends Omit<IBancoLeite, 'id'> {}
+export interface IBoryProps extends Omit<IEstacao, 'id'> {}
 
 export const createValidation = validation((getSchema) => ({
   body: getSchema<IBoryProps>(yup.object({
@@ -22,11 +22,12 @@ export const createValidation = validation((getSchema) => ({
     longitude: yup.string().required(),
     latitude: yup.string().required(),
     dataUltimaAtualizacao: yup.string().required(),
+    idClassificacao: yup.number().required(),
   }))
 }));
 
-export const create = async (req: Request<{}, {}, IBancoLeite>, res: Response) => {
-  const result = await BancoLeiteProvider.create(req.body)
+export const create = async (req: Request<{}, {}, IEstacao>, res: Response) => {
+  const result = await EstacaoProvider.create(req.body)
 
   if(result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

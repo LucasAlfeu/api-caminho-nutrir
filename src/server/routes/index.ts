@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { StatusCodes } from 'http-status-codes';
-import { UsuarioController, BancoLeiteController } from "../controllers";
+import { UsuarioController, EstacaoController } from "../controllers";
 import { ensureAuthenticated } from "../shared/middlewares";
 
 const router = Router()
@@ -21,12 +21,11 @@ router.post('/cadastrar', UsuarioController.createValidation , UsuarioController
 router.post('/entrar', UsuarioController.singInValidation , UsuarioController.singIn);
 router.put('/recuperar-senha', UsuarioController.resetPasswordValidation , UsuarioController.resetPassword);
 
-router.get('/banco-leite', BancoLeiteController.getAllValidation , BancoLeiteController.getAll);
-router.get('/banco-leite/:id', BancoLeiteController.getByIdValidation , BancoLeiteController.getById);
-router.post('/banco-leite', ensureAuthenticated, BancoLeiteController.createValidation , BancoLeiteController.create);
-router.put('/banco-leite/:id', ensureAuthenticated, BancoLeiteController.updateValidation, BancoLeiteController.update);
-router.delete('/banco-leite/:id', ensureAuthenticated, BancoLeiteController.deleteByIdValidation, BancoLeiteController.deleteById);
-
+router.get('/banco-leite', EstacaoController.getAllValidation , EstacaoController.getAll);
+router.get('/banco-leite/:id', EstacaoController.getByIdValidation , EstacaoController.getById);
+router.post('/banco-leite', ensureAuthenticated, EstacaoController.createValidation , EstacaoController.create);
+router.put('/banco-leite/:id', ensureAuthenticated, EstacaoController.updateValidation, EstacaoController.update);
+router.delete('/banco-leite/:id', ensureAuthenticated, EstacaoController.deleteByIdValidation, EstacaoController.deleteById);
 
 
 export { router };

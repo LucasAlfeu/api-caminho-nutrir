@@ -1,10 +1,10 @@
 import { Knex } from "../../knex"
-import { IBancoLeite } from "../../models";
+import { IEstacao } from "../../models";
 import { ETableNames } from "../../ETable";
 
-export const getAll = async (page: number, limit: number, filter: string, id = 0): Promise<IBancoLeite[] | Error> => {
+export const getAll = async (page: number, limit: number, filter: string, id = 0): Promise<IEstacao[] | Error> => {
   try {
-    const result = await Knex(ETableNames.bancoLeite)
+    const result = await Knex(ETableNames.estacao)
       .select("*")
       .where(qb => {
         if (id > 0) {
@@ -17,7 +17,7 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
       .limit(limit);
 
     if (id > 0 && result.every(item => item.id !== id)) {
-      const resultById = await Knex(ETableNames.bancoLeite)
+      const resultById = await Knex(ETableNames.estacao)
         .select('*')
         .where('id', '=', id)
         .first();

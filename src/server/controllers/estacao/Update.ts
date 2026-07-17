@@ -2,10 +2,10 @@ import type { Request, RequestHandler, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup'
 import { validation } from "../../shared/middlewares/Validation";
-import { IBancoLeite } from "../../database/models";
-import { BancoLeiteProvider } from "../../database/providers/bancoLeite";
+import { IEstacao } from "../../database/models";
+import { EstacaoProvider } from "../../database/providers/estacao";
 
-export interface IBodyProps extends Omit<IBancoLeite, 'id'> { }
+export interface IBodyProps extends Omit<IEstacao, 'id'> { }
 
 export interface IParamProps {
   id?: number;
@@ -24,7 +24,8 @@ export const updateValidation = validation((getSchema) => ({
     uf: yup.string().required(),
     longitude: yup.string().required(),
     latitude: yup.string().required(),
-    dataUltimaAtualizacao: yup.string().required(),    
+    dataUltimaAtualizacao: yup.string().required(),
+    idClassificacao: yup.number().required(),   
   }))
 }));
 
@@ -38,7 +39,7 @@ export const update = async (req: Request<IParamProps, {}, IBodyProps>, res: Res
     })
   }
 
-  const result = await BancoLeiteProvider.updateById(req.params.id, req.body);
+  const result = await EstacaoProvider.updateById(req.params.id, req.body);
 
   if(result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

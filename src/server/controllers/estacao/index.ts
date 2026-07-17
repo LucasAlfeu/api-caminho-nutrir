@@ -6,7 +6,7 @@ import { update, updateValidation } from "./Update"
 
 
 
-export const BancoLeiteController = {
+export const EstacaoController = {
   create: create,
   createValidation: createValidation,
   getAll: getAll,

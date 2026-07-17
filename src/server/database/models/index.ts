@@ -1,3 +1,3 @@
 export * from './Usuario'
-export * from './BancoLeite'
+export * from './Estacao'
 export * from './Classificacao'

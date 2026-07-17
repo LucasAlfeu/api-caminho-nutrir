@@ -1,4 +1,4 @@
-export interface IBancoLeite {
+export interface IEstacao {
   id: number,
   nome: string,
   descricao?: string,

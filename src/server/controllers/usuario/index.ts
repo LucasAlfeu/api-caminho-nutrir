@@ -10,7 +10,7 @@ import { disableUserById, disableUserByIdValidation } from "./DisableUserById"
 import { resetPassword, resetPasswordValidation } from "./ResetPassword"
 
 
-export const  = {
+export const UsuarioController  = {
   create: create,
   createValidation: createValidation,
   singIn: singIn,

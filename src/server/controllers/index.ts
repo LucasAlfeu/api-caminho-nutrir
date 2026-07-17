@@ -1,3 +1,3 @@
 export * from './usuario'
-export * from './banco-leite'
+export * from './estacao'
 export * from './classificacao-banco-leite'

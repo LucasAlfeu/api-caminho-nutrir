@@ -6,7 +6,7 @@ import { getById } from "./GetById";
 import { updateById } from "./UpdateById";
 
 
-export const BancoLeiteProvider = {
+export const EstacaoProvider = {
   create: create,
     getAll: getAll,
     getById: getById,

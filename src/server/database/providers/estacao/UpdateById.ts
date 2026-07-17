@@ -1,10 +1,10 @@
 import { Knex } from "../../knex"
-import { IBancoLeite, IUsuario } from "../../models";
+import { IEstacao } from "../../models";
 import { ETableNames } from "../../ETable";
 
-export const updateById = async (id: number, bancoLeite: Omit<IBancoLeite, 'id'>): Promise<void | Error> => {
+export const updateById = async (id: number, bancoLeite: Omit<IEstacao, 'id'>): Promise<void | Error> => {
   try {
-    const result = await Knex(ETableNames.bancoLeite)
+    const result = await Knex(ETableNames.estacao)
       .update(bancoLeite)
       .where('id', '=', id);
 

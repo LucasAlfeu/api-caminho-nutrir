@@ -1,11 +1,10 @@
 import { Knex } from "../../knex"
-import { IUsuario } from "../../models";
 import { ETableNames } from "../../ETable";
 
 
 export const count = async (filter = ''): Promise<number | Error> => {
   try {
-    const result = await Knex(ETableNames.bancoLeite)
+    const result = await Knex(ETableNames.estacao)
       .where('nome', 'like', `%${filter}%`)
       .count<[{ count: string | number }]>('* as count')
       .first();

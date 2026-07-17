@@ -1,11 +1,11 @@
 import { Knex } from "../../knex"
-import { IBancoLeite } from "../../models";
+import { IEstacao } from "../../models";
 import { ETableNames } from "../../ETable";
 
 
-export const getById = async (id: number): Promise<IBancoLeite | Error> => {
+export const getById = async (id: number): Promise<IEstacao | Error> => {
   try {
-    const result = await Knex(ETableNames.bancoLeite)
+    const result = await Knex(ETableNames.estacao)
       .select('*')
       .where('id', '=', id)
       .first();

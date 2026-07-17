@@ -2,7 +2,7 @@ import type { Request, RequestHandler, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup'
 import { validation } from "../../shared/middlewares/Validation";
-import { BancoLeiteProvider } from "../../database/providers/bancoLeite";
+import { EstacaoProvider } from "../../database/providers/estacao";
 
 export interface IParamProps {
   id?: number;
@@ -24,7 +24,7 @@ export const deleteById = async (req: Request<IParamProps>, res: Response) => {
     })
   }
 
-  const result = await BancoLeiteProvider.deleteById(req.params.id);
+  const result = await EstacaoProvider.deleteById(req.params.id);
 
   if(result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
