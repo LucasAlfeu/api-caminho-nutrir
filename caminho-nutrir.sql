@@ -8,7 +8,7 @@ CREATE TABLE Classificacao (
   CONSTRAINT pk_classificacao PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE BancoDeLeite_Endereco (
+CREATE TABLE Estacao (
   id INT AUTO_INCREMENT,
   nome VARCHAR(255) NOT NULL,
   descricao TEXT,
@@ -24,13 +24,13 @@ CREATE TABLE BancoDeLeite_Endereco (
   longitude DECIMAL(11, 7),
   latitude DECIMAL(10, 7),
   fk_Classificacao_id INT NOT NULL,
-  CONSTRAINT pk_banco_leite_endereco PRIMARY KEY (id),
-  CONSTRAINT fk_banco_classificacao FOREIGN KEY (fk_Classificacao_id) 
+  CONSTRAINT pk_estacao PRIMARY KEY (id),
+  CONSTRAINT fk_estacao_classificacao FOREIGN KEY (fk_Classificacao_id) 
     REFERENCES Classificacao(id) 
     ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE Usuario_Credenciais (
+CREATE TABLE Usuario (
   id INT AUTO_INCREMENT,
   nome VARCHAR(255) NOT NULL,
   matricula VARCHAR(50) NOT NULL UNIQUE,
@@ -39,19 +39,19 @@ CREATE TABLE Usuario_Credenciais (
   usuario VARCHAR(100) NOT NULL UNIQUE,
   email VARCHAR(255) NOT NULL UNIQUE,
   senha VARCHAR(255) NOT NULL,
-  CONSTRAINT pk_usuario_credenciais PRIMARY KEY (id)
+  CONSTRAINT pk_usuario PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE gerencia (
-  fk_Usuario_Credenciais_id INT,
-  fk_BancoDeLeite_Endereco_id INT,
-  CONSTRAINT pk_gerencia PRIMARY KEY (fk_Usuario_Credenciais_id, fk_BancoDeLeite_Endereco_id),
+  fk_Usuario_id INT,
+  fk_Estacao_id INT,
+  CONSTRAINT pk_gerencia PRIMARY KEY (fk_Usuario_id, fk_Estacao_id),
     
-  CONSTRAINT fk_gerencia_usuario FOREIGN KEY (fk_Usuario_Credenciais_id) 
-    REFERENCES Usuario_Credenciais(id) 
+  CONSTRAINT fk_gerencia_usuario FOREIGN KEY (fk_Usuario_id) 
+    REFERENCES Usuario(id) 
     ON DELETE CASCADE ON UPDATE CASCADE,
         
-  CONSTRAINT fk_gerencia_banco FOREIGN KEY (fk_BancoDeLeite_Endereco_id) 
-    REFERENCES BancoDeLeite_Endereco(id) 
+  CONSTRAINT fk_gerencia_estacao FOREIGN KEY (fk_Estacao_id) 
+    REFERENCES Estacao(id) 
     ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
