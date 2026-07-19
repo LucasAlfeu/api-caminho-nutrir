@@ -3,6 +3,7 @@ USE CaminhoNutrir;
 
 CREATE TABLE Classificacao (
   id INT AUTO_INCREMENT,
+  nome VARCHAR(255) NOT NULL,
   descricao VARCHAR(255) NOT NULL,
   cor VARCHAR(50) NOT NULL,
   CONSTRAINT pk_classificacao PRIMARY KEY (id)

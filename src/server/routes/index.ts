@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { UsuarioController, EstacaoController } from "../controllers";
+import { UsuarioController, EstacaoController, ClassificacaoController } from "../controllers";
 import { ensureAuthenticated } from "../shared/middlewares";
 
 const router = Router()
@@ -32,5 +32,11 @@ router.post('/banco-leite', ensureAuthenticated, EstacaoController.createValidat
 router.put('/banco-leite/:id', ensureAuthenticated, EstacaoController.updateValidation, EstacaoController.update);
 router.delete('/banco-leite/:id', ensureAuthenticated, EstacaoController.deleteByIdValidation, EstacaoController.deleteById);
 
+// URL refernte a classificação
+
+router.get('/classificacao', ClassificacaoController.getAllValidation , ClassificacaoController.getAll);
+router.post('/classificacao', ensureAuthenticated, ClassificacaoController.createValidation, ClassificacaoController.create)
+router.put('/classificacao/:id', ensureAuthenticated, ClassificacaoController.updateValidation, ClassificacaoController.update);
+router.delete('/classificacao/:id', ensureAuthenticated, ClassificacaoController.deleteByIdValidation, ClassificacaoController.deleteById);
 
 export { router };

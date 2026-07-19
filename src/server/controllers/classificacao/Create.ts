@@ -9,14 +9,15 @@ export interface IBoryProps extends Omit<IClassificacao, 'id'> {}
 
 export const createValidation = validation((getSchema) => ({
   body: getSchema<IBoryProps>(yup.object({
-    descricao: yup.string().required().min(3).max(150),
+    nome: yup.string().required().min(3).max(150),
+    descricao: yup.string().required().min(3).max(1000),
     cor: yup.string().required()
   }))
 }));
 
 export const create = async (req: Request<{}, {}, IClassificacao>, res: Response) => {
   const result = await ClassificacaoProvider.create(req.body)
-
+  console.log(req.body)
   if(result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       errors: {
