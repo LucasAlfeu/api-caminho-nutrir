@@ -55,3 +55,10 @@ CREATE TABLE gerencia (
     REFERENCES Estacao(id) 
     ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
+
+
+-- Liberar Primeiro usuário
+
+UPDATE Usuario 
+SET indAdm = 1, indLiberado = 1 
+WHERE id = 1;
