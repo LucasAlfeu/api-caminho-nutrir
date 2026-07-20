@@ -60,7 +60,7 @@ CREATE TABLE gerencia (
 CREATE TABLE Historico (
   id INT AUTO_INCREMENT,
   data DATETIME DEFAULT CURRENT_TIMESTAMP,
-  descricao TEXT NOT NULL,
+  descricao VARCHAR(255) NOT NULL,
   nomeUsuario VARCHAR(255) NOT NULL,
   emailUsuario VARCHAR(255) NOT NULL,
   fk_Estacao_id INT NOT NULL,
