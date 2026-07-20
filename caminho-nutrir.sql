@@ -57,6 +57,19 @@ CREATE TABLE gerencia (
     ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
+CREATE TABLE Historico (
+  id INT AUTO_INCREMENT,
+  data DATETIME DEFAULT CURRENT_TIMESTAMP,
+  descricao TEXT NOT NULL,
+  nomeUsuario VARCHAR(255) NOT NULL,
+  emailUsuario VARCHAR(255) NOT NULL,
+  fk_Estacao_id INT NOT NULL,
+  CONSTRAINT pk_historico PRIMARY KEY (id),
+  CONSTRAINT fk_historico_estacao FOREIGN KEY (fk_Estacao_id) 
+    REFERENCES Estacao(id) 
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
 
 -- Liberar Primeiro usuário
 
