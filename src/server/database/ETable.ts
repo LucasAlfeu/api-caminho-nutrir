@@ -1,5 +1,6 @@
 export enum ETableNames {
   usuario = 'usuario',
   estacao = 'estacao',
-  classificacao = 'classificacao'
+  classificacao = 'classificacao',
+  historico = 'historico'
 }
