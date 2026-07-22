@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup'
 import { validation } from "../../shared/middlewares/Validation";
 import { EstacaoProvider } from "../../database/providers/estacao";
+import { HistoricoProvider } from "../../database/providers/historico";
 
 
 export interface IQueryProps {
@@ -27,23 +28,35 @@ export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Respons
     req.query.limit || 10, 
     req.query.filter || '', 
     req.query.id ? Number(req.query.id) : 0
-  )
-  const count = await EstacaoProvider.count(req.query.filter)
+  );
+  
+  const count = await EstacaoProvider.count(req.query.filter);
 
   if(result instanceof Error) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      errors: {
-        default: result.message
-      }
-    });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ errors: { default: result.message } });
   } else if (count instanceof Error) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      errors: { default: count.message}
-    })
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ errors: { default: count.message } });
   }
 
-  res.setHeader('x-total-count', count);
+  const resultCompleto = await Promise.all(result.map(async (estacao) => {
+    
+    const recuperaHistorico = await HistoricoProvider.getAllByIdEstacao(estacao.id);
+    
+    let historicoReverso: any[] = [];
+    if (!(recuperaHistorico instanceof Error)) {
+      historicoReverso = recuperaHistorico.reverse();
+    }
+
+    const dataUltimaInsercao = historicoReverso.length > 0 ? historicoReverso[0].data : null;
+
+    return {
+      ...estacao,
+      dataUltimaAtualizacao: dataUltimaInsercao,
+    };
+  }));
+
+  res.setHeader('x-total-count', String(count)); 
   res.setHeader('Access-Control-Expose-Headers', 'x-total-count');
 
-  return res.status(StatusCodes.OK).json(result);
+  return res.status(StatusCodes.OK).json(resultCompleto);
 }
