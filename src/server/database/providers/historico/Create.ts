@@ -2,7 +2,11 @@ import { ETableNames } from "../../ETable";
 import { Knex } from "../../knex";
 import { IHistorico } from "../../models";
 
-export const create = async (historico: Omit<IHistorico, 'id'>): Promise<number | Error> => {
+export type IHistoricoInsert = Omit<IHistorico, 'id' | 'idEstacao'> & {
+  fk_Estacao_id: number;
+};
+
+export const create = async (historico: Omit<IHistoricoInsert, 'id'>): Promise<number | Error> => {
   try {
     const [result] = await Knex(ETableNames.historico).insert(historico).returning('id');
 

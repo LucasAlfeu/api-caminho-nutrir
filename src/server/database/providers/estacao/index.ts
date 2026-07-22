@@ -1,5 +1,6 @@
 import { count } from "./Count";
 import { create } from "./Create";
+import { createRequest } from "./CreateRequest";
 import { deleteById } from "./DeleteById";
 import { getAll } from "./GetAll";
 import { getById } from "./GetById";
@@ -12,5 +13,6 @@ export const EstacaoProvider = {
     getById: getById,
     updateById: updateById, 
     deleteById: deleteById,
-    count: count
+    count: count,
+    createRequest: createRequest
 }

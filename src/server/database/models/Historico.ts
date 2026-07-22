@@ -1,8 +1,8 @@
 export interface IHistorico {
   id: number,
-  data: any,
+  data?: any,
   descricao: string,
   nomeUsuario: string,
-  emailUsuario: string,
+  emailUsuario?: string,
   idEstacao: number
 }

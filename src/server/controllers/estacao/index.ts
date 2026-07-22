@@ -1,4 +1,5 @@
 import { create, createValidation } from "./Create"
+import { createRequest, createRequestValidation } from "./CreateRequest"
 import { deleteById, deleteByIdValidation } from "./Delete"
 import { getAll, getAllValidation } from "./GetAll"
 import { getById, getByIdValidation } from "./GetById"
@@ -17,4 +18,6 @@ export const EstacaoController = {
   updateValidation: updateValidation,
   deleteById: deleteById,
   deleteByIdValidation: deleteByIdValidation,
+  createRequest: createRequest,
+  createRequestValidation: createRequestValidation
 }

@@ -32,6 +32,8 @@ router.post('/banco-leite', ensureAuthenticated, EstacaoController.createValidat
 router.put('/banco-leite/:id', ensureAuthenticated, EstacaoController.updateValidation, EstacaoController.update);
 router.delete('/banco-leite/:id', ensureAuthenticated, EstacaoController.deleteByIdValidation, EstacaoController.deleteById);
 
+router.post('/solicitar-banco-leite', EstacaoController.createRequestValidation , EstacaoController.createRequest);
+
 // URL refernte a classificação
 
 router.get('/classificacao', ClassificacaoController.getAllValidation , ClassificacaoController.getAll);
