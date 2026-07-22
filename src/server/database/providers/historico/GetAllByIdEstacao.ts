@@ -7,8 +7,7 @@ export const getAllByIdEstacao = async (id: number): Promise<IHistorico[] | Erro
   try {
     const result = await Knex(ETableNames.historico)
       .select('*')
-      .where('fk_Estacao_id', '=', id)
-      .first();
+      .where('fk_Estacao_id', '=', id);
     
     if(result) return result;
 

@@ -37,12 +37,17 @@ export const getById = async (req: Request<IParamProps>, res: Response) => {
 
   const recuperaHistorico = await HistoricoProvider.getAllByIdEstacao(result.id)
 
-  console.log(recuperaHistorico);
+  if (recuperaHistorico instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: recuperaHistorico.message
+      }
+    });
+  }
 
   const resultCompleto = {
     ...result,
-    historico: [recuperaHistorico]
+    historico: recuperaHistorico.reverse()
   }
-  console.log(resultCompleto)
   return res.status(StatusCodes.OK).json(resultCompleto);
 }
