@@ -11,6 +11,6 @@ export interface IEstacao {
   uf: string,
   longitude: string,
   latitude: string,
-  dataUltimaAtualizacao: string,
+  // dataUltimaAtualizacao: string,
   idClassificacao: number
 }

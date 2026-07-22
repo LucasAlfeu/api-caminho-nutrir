@@ -4,11 +4,14 @@ import * as yup from 'yup'
 import { validation } from "../../shared/middlewares/Validation";
 import { IEstacao } from "../../database/models";
 import { EstacaoProvider } from "../../database/providers/estacao";
+import { HistoricoProvider } from "../../database/providers/historico";
 
 export interface IBodyProps extends Omit<IEstacao, 'id'> { }
 
 export interface IParamProps {
   id?: number;
+  nomeUsuario?: string,
+  emailUsuario?: string
 }
 
 export const updateValidation = validation((getSchema) => ({
@@ -24,7 +27,6 @@ export const updateValidation = validation((getSchema) => ({
     uf: yup.string().required(),
     longitude: yup.string().required(),
     latitude: yup.string().required(),
-    dataUltimaAtualizacao: yup.string().required(),
     idClassificacao: yup.number().required(),   
   }))
 }));
@@ -39,7 +41,15 @@ export const update = async (req: Request<IParamProps, {}, IBodyProps>, res: Res
     })
   }
 
-  const result = await EstacaoProvider.updateById(req.params.id, req.body);
+  const { idClassificacao, ...restoDoBody } = req.body;
+
+  // 2. Montamos o objeto de atualização apenas com o resto e a chave correta
+  const bodyUptade = {
+    ...restoDoBody,
+    fk_Classificacao_id: idClassificacao
+  };
+
+  const result = await EstacaoProvider.updateById(req.params.id, bodyUptade);
 
   if(result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -48,6 +58,46 @@ export const update = async (req: Request<IParamProps, {}, IBodyProps>, res: Res
       }
     });
   }
+
+  const idDaEstacao = Number(req.params.id);
+
+const dadosParaHistorico = {
+  nomeUsuario: req.params.nomeUsuario as string, 
+  emailUsuario: req.params.emailUsuario as string, 
+  
+  fk_Estacao_id: idDaEstacao, 
+  
+  descricao: "Banco de leite atualizado"
+};
+
+const createHistoricoResul = await HistoricoProvider.create(dadosParaHistorico);
+console.log(createHistoricoResul);
+
+if (createHistoricoResul instanceof Error) {
+  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    errors: {
+      default: createHistoricoResul.message
+    }
+  });
+}
+
+  // const dadosParaHistorico = {
+  //     nomeUsuario: req.params.nomeUsuario as string,
+  //     emailUsuario: req.params.emailUsuario as string,
+  //     fk_Estacao_id: result,
+  //     descricao: "Banco de leite atualizado"
+  //   }
+  
+  //   const createHistoricoResul = await HistoricoProvider.create(dadosParaHistorico)
+  //   console.log(createHistoricoResul)
+  
+  //   if (createHistoricoResul instanceof Error) {
+  //     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+  //       errors: {
+  //         default: createHistoricoResul.message
+  //       }
+  //     });
+  //   }
 
   return res.status(StatusCodes.NO_CONTENT).json(result);
 }

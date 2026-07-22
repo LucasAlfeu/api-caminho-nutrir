@@ -29,7 +29,7 @@ router.put('/recuperar-senha', UsuarioController.resetPasswordValidation , Usuar
 router.get('/banco-leite', EstacaoController.getAllValidation , EstacaoController.getAll);
 router.get('/banco-leite/:id', EstacaoController.getByIdValidation , EstacaoController.getById);
 router.post('/banco-leite', ensureAuthenticated, EstacaoController.createValidation , EstacaoController.create);
-router.put('/banco-leite/:id', ensureAuthenticated, EstacaoController.updateValidation, EstacaoController.update);
+router.put('/banco-leite/:id/:nomeUsuario/:emailUsuario', ensureAuthenticated, EstacaoController.updateValidation, EstacaoController.update);
 router.delete('/banco-leite/:id', ensureAuthenticated, EstacaoController.deleteByIdValidation, EstacaoController.deleteById);
 
 router.post('/solicitar-banco-leite', EstacaoController.createRequestValidation , EstacaoController.createRequest);
