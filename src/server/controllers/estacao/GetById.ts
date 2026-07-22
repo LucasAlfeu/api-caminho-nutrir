@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup'
 import { validation } from "../../shared/middlewares/Validation";
 import { EstacaoProvider } from "../../database/providers/estacao";
+import { HistoricoProvider } from "../../database/providers/historico";
 
 
 export interface IParamProps {
@@ -34,5 +35,14 @@ export const getById = async (req: Request<IParamProps>, res: Response) => {
     });
   }
 
-  return res.status(StatusCodes.OK).json(result);
+  const recuperaHistorico = await HistoricoProvider.getAllByIdEstacao(result.id)
+
+  console.log(recuperaHistorico);
+
+  const resultCompleto = {
+    ...result,
+    historico: [recuperaHistorico]
+  }
+  console.log(resultCompleto)
+  return res.status(StatusCodes.OK).json(resultCompleto);
 }
