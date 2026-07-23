@@ -1,4 +1,4 @@
-import type { Request, RequestHandler, Response } from "express";
+import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup'
 import { validation } from "../../shared/middlewares/Validation";
@@ -10,8 +10,11 @@ export interface IBodyProps extends Omit<IEstacao, 'id'> { }
 
 export interface IParamProps {
   id?: number;
-  nomeUsuario?: string,
-  emailUsuario?: string
+}
+
+export interface IQueryProps {
+  nomeUsuario?: string;
+  emailUsuario?: string;
 }
 
 export const updateValidation = validation((getSchema) => ({
@@ -28,22 +31,24 @@ export const updateValidation = validation((getSchema) => ({
     longitude: yup.string().required(),
     latitude: yup.string().required(),
     idClassificacao: yup.number().required(),   
+  })),
+  query: getSchema<IQueryProps>(yup.object({
+    nomeUsuario: yup.string().required(),
+    emailUsuario: yup.string().email().required()
   }))
 }));
 
-
-export const update = async (req: Request<IParamProps, {}, IBodyProps>, res: Response) => {
+export const update = async (req: Request<IParamProps, any, IBodyProps, IQueryProps>, res: Response) => {
   if(!req.params.id) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       errors: {
         default: 'O parâmetro "id" precisa ser informado'
       }
-    })
+    });
   }
 
   const { idClassificacao, ...restoDoBody } = req.body;
 
-  // 2. Montamos o objeto de atualização apenas com o resto e a chave correta
   const bodyUptade = {
     ...restoDoBody,
     fk_Classificacao_id: idClassificacao
@@ -61,43 +66,27 @@ export const update = async (req: Request<IParamProps, {}, IBodyProps>, res: Res
 
   const idDaEstacao = Number(req.params.id);
 
-const dadosParaHistorico = {
-  nomeUsuario: req.params.nomeUsuario as string, 
-  emailUsuario: req.params.emailUsuario as string, 
-  
-  fk_Estacao_id: idDaEstacao, 
-  
-  descricao: "Banco de leite atualizado"
-};
+  // 5. Pegamos os dados de req.query em vez de req.params
+  const dadosParaHistorico = {
+    nomeUsuario: req.query.nomeUsuario as string, 
+    emailUsuario: req.query.emailUsuario as string, 
+    fk_Estacao_id: idDaEstacao, 
+    descricao: "Banco de leite atualizado"
+  };
 
-const createHistoricoResul = await HistoricoProvider.create(dadosParaHistorico);
-console.log(createHistoricoResul);
+  const createHistoricoResul = await HistoricoProvider.create(dadosParaHistorico);
+  console.log(createHistoricoResul);
 
-if (createHistoricoResul instanceof Error) {
-  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-    errors: {
-      default: createHistoricoResul.message
-    }
-  });
-}
+  if (createHistoricoResul instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: createHistoricoResul.message
+      }
+    });
+  }
 
-  // const dadosParaHistorico = {
-  //     nomeUsuario: req.params.nomeUsuario as string,
-  //     emailUsuario: req.params.emailUsuario as string,
-  //     fk_Estacao_id: result,
-  //     descricao: "Banco de leite atualizado"
-  //   }
-  
-  //   const createHistoricoResul = await HistoricoProvider.create(dadosParaHistorico)
-  //   console.log(createHistoricoResul)
-  
-  //   if (createHistoricoResul instanceof Error) {
-  //     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-  //       errors: {
-  //         default: createHistoricoResul.message
-  //       }
-  //     });
-  //   }
-
-  return res.status(StatusCodes.NO_CONTENT).json(result);
+  // Importante: status NO_CONTENT (204) não envia corpo de resposta. 
+  // O Express ignorará o ".json(result)" se o status for 204.
+  // Se quiser enviar o JSON de volta, mude para OK (200).
+  return res.status(StatusCodes.NO_CONTENT).send();
 }

@@ -17,7 +17,7 @@ export const getByIdValidation = validation((getSchema) => ({
 }));
 
 export const getById = async (req: Request<IParamProps>, res: Response) => {
- if(!req.params.id) {
+  if(!req.params.id) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       errors: {
         default: 'O parâmetro "id" precisa ser informado'
@@ -45,9 +45,14 @@ export const getById = async (req: Request<IParamProps>, res: Response) => {
     });
   }
 
+  // Agora extraímos 'idClassificacao' (que é o que está na interface)
+  const { idClassificacao, ...restoDoResult } = result;
+
   const resultCompleto = {
-    ...result,
+    ...restoDoResult,
+    classificacao: idClassificacao, // Renomeando para o Front-end
     historico: recuperaHistorico.reverse()
   }
+  
   return res.status(StatusCodes.OK).json(resultCompleto);
 }

@@ -4,9 +4,14 @@ import { validation } from "../../shared/middlewares/Validation";
 import * as yup from 'yup'
 import { EstacaoProvider } from "../../database/providers/estacao";
 import { StatusCodes } from "http-status-codes";
+import { HistoricoProvider } from "../../database/providers/historico";
 
 
 export interface IBoryProps extends Omit<IEstacao, 'id'> {}
+export interface IQueryProps {
+  nomeUsuario?: string;
+  emailUsuario?: string;
+}
 
 export const createValidation = validation((getSchema) => ({
   body: getSchema<IBoryProps>(yup.object({
@@ -21,13 +26,24 @@ export const createValidation = validation((getSchema) => ({
     uf: yup.string().required(),
     longitude: yup.string().required(),
     latitude: yup.string().required(),
-    dataUltimaAtualizacao: yup.string().required(),
     idClassificacao: yup.number().required(),
-  }))
+  })),
+  query: getSchema<IQueryProps>(yup.object({
+      nomeUsuario: yup.string().required(),
+      emailUsuario: yup.string().email().required()
+    }))
 }));
 
-export const create = async (req: Request<{}, {}, IEstacao>, res: Response) => {
-  const result = await EstacaoProvider.create(req.body)
+export const create = async (req: Request<{}, {}, IBoryProps>, res: Response) => {
+  
+  const { idClassificacao, ...restoDoBody } = req.body;
+
+  const bodyParaInserir = {
+    ...restoDoBody,
+    fk_Classificacao_id: idClassificacao 
+  };
+
+  const result = await EstacaoProvider.create(bodyParaInserir as any);
 
   if(result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -37,5 +53,24 @@ export const create = async (req: Request<{}, {}, IEstacao>, res: Response) => {
     });
   }
 
+    const dadosParaHistorico = {
+      nomeUsuario: req.query.nomeUsuario as string, 
+      emailUsuario: req.query.emailUsuario as string, 
+      fk_Estacao_id: result, 
+      descricao: "Banco de leite cadastrado"
+    };
+  
+    const createHistoricoResul = await HistoricoProvider.create(dadosParaHistorico);
+    console.log(createHistoricoResul);
+  
+    if (createHistoricoResul instanceof Error) {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        errors: {
+          default: createHistoricoResul.message
+        }
+      });
+    }
+
   return res.status(StatusCodes.CREATED).json(result);
+
 }
