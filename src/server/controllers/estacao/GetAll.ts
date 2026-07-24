@@ -4,6 +4,8 @@ import * as yup from 'yup'
 import { validation } from "../../shared/middlewares/Validation";
 import { EstacaoProvider } from "../../database/providers/estacao";
 import { HistoricoProvider } from "../../database/providers/historico";
+import { ClassificacaoProvider } from "../../database/providers/classificacao";
+import { IClassificacao } from "../../database/models";
 
 
 export interface IQueryProps {
@@ -49,8 +51,18 @@ export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Respons
 
     const dataUltimaInsercao = historicoReverso.length > 0 ? historicoReverso[0].data : null;
 
+    const getCategoria = await ClassificacaoProvider.getById(estacao.idClassificacao);
+
+    let categoria: any;
+    if (!(getCategoria instanceof Error)) {
+      categoria = getCategoria;
+    }
+
+    const { fk_Classificacao_id, idClassificacao, ...estacaoFormatada } = estacao as any;
+  
     return {
-      ...estacao,
+      ...estacaoFormatada,
+      categoria: categoria,
       dataUltimaAtualizacao: dataUltimaInsercao,
     };
   }));

@@ -5,7 +5,7 @@ import { ETableNames } from "../../ETable";
 export const getAll = async (page: number, limit: number, filter: string, id = 0): Promise<IEstacao[] | Error> => {
   try {
     const result = await Knex(ETableNames.estacao)
-      .select("*")
+      .select("*",'fk_Classificacao_id as idClassificacao')
       .where(qb => {
         if (id > 0) {
             qb.where('id', id).orWhere('nome', 'like', `%${filter}%`);
@@ -18,7 +18,7 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
 
     if (id > 0 && result.every(item => item.id !== id)) {
       const resultById = await Knex(ETableNames.estacao)
-        .select('*')
+        .select("*",'fk_Classificacao_id as idClassificacao')
         .where('id', '=', id)
         .first();
       
