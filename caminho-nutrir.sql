@@ -24,7 +24,7 @@ CREATE TABLE Estacao (
   uf CHAR(2) NOT NULL,
   longitude DECIMAL(11, 7),
   latitude DECIMAL(10, 7),
-  fk_Classificacao_id INT NOT NULL,
+  fk_Classificacao_id INT NULL,
   CONSTRAINT pk_estacao PRIMARY KEY (id),
   CONSTRAINT fk_estacao_classificacao FOREIGN KEY (fk_Classificacao_id) 
     REFERENCES Classificacao(id) 
