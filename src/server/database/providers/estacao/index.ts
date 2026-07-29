@@ -5,6 +5,7 @@ import { deleteById } from "./DeleteById";
 import { getAll } from "./GetAll";
 import { getById } from "./GetById";
 import { updateById } from "./UpdateById";
+import { validadeRequestById } from "./ValidadeRequest";
 
 
 export const EstacaoProvider = {
@@ -14,5 +15,6 @@ export const EstacaoProvider = {
     updateById: updateById, 
     deleteById: deleteById,
     count: count,
-    createRequest: createRequest
+    createRequest: createRequest,
+    validadeRequestById: validadeRequestById
 }

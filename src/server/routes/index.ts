@@ -33,6 +33,7 @@ router.put('/banco-leite/:id', ensureAuthenticated, EstacaoController.updateVali
 router.delete('/banco-leite/:id', ensureAuthenticated, EstacaoController.deleteByIdValidation, EstacaoController.deleteById);
 
 router.post('/solicitar-banco-leite', EstacaoController.createRequestValidation , EstacaoController.createRequest);
+router.put('/solicitar-banco-leite/:id', ensureAuthenticated, EstacaoController.validadeRequestByIdValidation , EstacaoController.validadeRequestById);
 
 // URL refernte a classificação
 
