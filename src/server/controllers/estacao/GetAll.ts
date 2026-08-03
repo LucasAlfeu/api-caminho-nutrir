@@ -13,6 +13,7 @@ export interface IQueryProps {
   page?: number | undefined;
   limit?: number | undefined;
   filter?: string | undefined;
+  indValidado?: boolean | any;
 }
 
 export const getAllValidation = validation((getSchema) => ({
@@ -21,15 +22,19 @@ export const getAllValidation = validation((getSchema) => ({
     limit: yup.number().optional().moreThan(0),
     id: yup.number().integer().optional().moreThan(0),
     filter: yup.string().optional(), 
+    indValidado: yup.boolean().optional(), 
   }))
 }));
 
 export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Response) => {
+  const isIndValidado = req.query.indValidado === 'true' || req.query.indValidado === true;
+  
   const result = await EstacaoProvider.getAll(
     req.query.page || 1, 
     req.query.limit || 10, 
     req.query.filter || '', 
-    req.query.id ? Number(req.query.id) : 0
+    req.query.id ? Number(req.query.id) : 0,
+    req.query.indValidado !== undefined ? isIndValidado : undefined
   );
   
   const count = await EstacaoProvider.count(req.query.filter);

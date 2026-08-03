@@ -2,7 +2,7 @@ import { Knex } from "../../knex"
 import { IEstacao } from "../../models";
 import { ETableNames } from "../../ETable";
 
-export const getAll = async (page: number, limit: number, filter: string, id = 0): Promise<IEstacao[] | Error> => {
+export const getAll = async (page: number, limit: number, filter: string, id = 0, indValidado?: boolean): Promise<IEstacao[] | Error> => {
   try {
     const result = await Knex(ETableNames.estacao)
       .select("*",'fk_Classificacao_id as idClassificacao')
@@ -13,10 +13,15 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
             qb.where('nome', 'like', `%${filter}%`);
         }
       })
+      .modify(qb => {
+        if (indValidado !== undefined) {
+          qb.andWhere('indValidado', indValidado);
+        }
+      })
       .offset((page - 1) * limit)
       .limit(limit);
 
-    if (id > 0 && result.every(item => item.id !== id)) {
+    if (id > 0 && result.every((item: IEstacao) => item.id !== id)) {
       const resultById = await Knex(ETableNames.estacao)
         .select("*",'fk_Classificacao_id as idClassificacao')
         .where('id', '=', id)
