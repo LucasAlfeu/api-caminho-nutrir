@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { UsuarioController, EstacaoController, ClassificacaoController } from "../controllers";
 import { ensureAuthenticated } from "../shared/middlewares";
+import { ReporteController } from "../controllers/reporte/indext";
 
 const router = Router()
 
@@ -41,5 +42,9 @@ router.get('/classificacao', ClassificacaoController.getAllValidation , Classifi
 router.post('/classificacao', ensureAuthenticated, ClassificacaoController.createValidation, ClassificacaoController.create)
 router.put('/classificacao/:id', ensureAuthenticated, ClassificacaoController.updateValidation, ClassificacaoController.update);
 router.delete('/classificacao/:id', ensureAuthenticated, ClassificacaoController.deleteByIdValidation, ClassificacaoController.deleteById);
+
+// URL referente aos reportes
+
+router.post('/reporte',  ReporteController.createValidation, ReporteController.create );
 
 export { router };
