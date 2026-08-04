@@ -7,7 +7,7 @@ import { StatusCodes } from "http-status-codes";
 import { HistoricoProvider } from "../../database/providers/historico";
 
 
-export interface IBoryProps extends Omit<IEstacao, 'id'> {}
+export interface IBoryProps extends Omit<IEstacao, 'id' | 'indValidado'> {}
 export interface IQueryProps {
   nomeUsuario?: string;
   emailUsuario?: string;
@@ -40,7 +40,8 @@ export const create = async (req: Request<{}, {}, IBoryProps>, res: Response) =>
 
   const bodyParaInserir = {
     ...restoDoBody,
-    fk_Classificacao_id: idClassificacao 
+    fk_Classificacao_id: idClassificacao,
+    indValidado: true
   };
 
   const result = await EstacaoProvider.create(bodyParaInserir as any);

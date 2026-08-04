@@ -10,8 +10,8 @@ import { IClassificacao } from "../../database/models";
 
 export interface IQueryProps {
   id?: number | undefined
-  page?: number | undefined;
-  limit?: number | undefined;
+  page?: number | any;
+  limit?: number | any;
   filter?: string | undefined;
   indValidado?: boolean | any;
 }
@@ -30,8 +30,8 @@ export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Respons
   const isIndValidado = req.query.indValidado === 'true' || req.query.indValidado === true;
   
   const result = await EstacaoProvider.getAll(
-    req.query.page || 1, 
-    req.query.limit || 10, 
+    req.query.page, 
+    req.query.limit, 
     req.query.filter || '', 
     req.query.id ? Number(req.query.id) : 0,
     req.query.indValidado !== undefined ? isIndValidado : undefined
