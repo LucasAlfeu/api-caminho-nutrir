@@ -6,6 +6,7 @@ import { EstacaoProvider } from "../../database/providers/estacao";
 import { HistoricoProvider } from "../../database/providers/historico";
 import { ClassificacaoProvider } from "../../database/providers/classificacao";
 import { IClassificacao } from "../../database/models";
+import { ReporteProvidedr } from "../../database/providers/reporte";
 
 
 export interface IQueryProps {
@@ -64,11 +65,24 @@ export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Respons
     }
 
     const { fk_Classificacao_id, idClassificacao, ...estacaoFormatada } = estacao as any;
+
+    const recuperaReporte = await ReporteProvidedr.getAllById(estacao.id)
+    
+    if (recuperaReporte instanceof Error) {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        errors: {
+          default: recuperaReporte.message
+        }
+      });
+    }
+
+    const numReporte = recuperaReporte.length;
   
     return {
       ...estacaoFormatada,
       categoria: categoria,
       dataUltimaAtualizacao: dataUltimaInsercao,
+      numReporte: numReporte,
     };
   }));
 
