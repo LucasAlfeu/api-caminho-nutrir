@@ -61,7 +61,7 @@ export const getById = async (req: Request<IParamProps>, res: Response) => {
   const resultCompleto = {
     ...restoDoResult,
     classificacao: idClassificacao, 
-    historico: recuperaHistorico.reverse(),
+    historico: recuperaHistorico,
     reporte: recuperaReporte
   }
   
