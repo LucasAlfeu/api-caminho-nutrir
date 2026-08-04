@@ -4,6 +4,7 @@ import * as yup from 'yup'
 import { validation } from "../../shared/middlewares/Validation";
 import { EstacaoProvider } from "../../database/providers/estacao";
 import { HistoricoProvider } from "../../database/providers/historico";
+import { ReporteProvidedr } from "../../database/providers/reporte";
 
 
 export interface IParamProps {
@@ -45,13 +46,23 @@ export const getById = async (req: Request<IParamProps>, res: Response) => {
     });
   }
 
-  // Agora extraímos 'idClassificacao' (que é o que está na interface)
+  const recuperaReporte = await ReporteProvidedr.getAllById(result.id)
+
+  if (recuperaReporte instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: recuperaReporte.message
+      }
+    });
+  }
+
   const { idClassificacao, ...restoDoResult } = result;
 
   const resultCompleto = {
     ...restoDoResult,
-    classificacao: idClassificacao, // Renomeando para o Front-end
-    historico: recuperaHistorico.reverse()
+    classificacao: idClassificacao, 
+    historico: recuperaHistorico.reverse(),
+    reporte: recuperaReporte
   }
   
   return res.status(StatusCodes.OK).json(resultCompleto);

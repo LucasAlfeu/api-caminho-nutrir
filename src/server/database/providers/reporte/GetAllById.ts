@@ -3,10 +3,10 @@ import { Knex } from "../../knex"
 import { IReporte } from "../../models/Reporte";
 
 
-export const getAllById = async (id: number): Promise<IReporte[] | Error> => {
+export const getAllById = async (id: number): Promise<Pick<IReporte, 'id' | 'relato'>[] | Error> => {
   try {
     const result = await Knex(ETableNames.reporte)
-      .select('*')
+      .select('id', 'relato')
       .where('fk_Estacao_id', '=', id);
     
     if(result) return result;
