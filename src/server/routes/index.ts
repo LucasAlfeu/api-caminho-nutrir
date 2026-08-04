@@ -46,5 +46,6 @@ router.delete('/classificacao/:id', ensureAuthenticated, ClassificacaoController
 // URL referente aos reportes
 
 router.post('/reporte',  ReporteController.createValidation, ReporteController.create );
+router.delete('/reporte/:id', ReporteController.deleteByIdValidation, ReporteController.deleteById);
 
 export { router };
