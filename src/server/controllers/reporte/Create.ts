@@ -7,7 +7,7 @@ import { IReporte } from "../../database/models/Reporte";
 import { ReporteProvidedr } from "../../database/providers/reporte";
 
 
-export interface IBoryProps extends Omit<IReporte, 'id'> {}
+export interface IBoryProps extends Omit<IReporte, 'id'> { }
 export interface IQueryProps {
   nomeUsuario?: string;
   emailUsuario?: string;
@@ -21,7 +21,7 @@ export const createValidation = validation((getSchema) => ({
 }));
 
 export const create = async (req: Request<{}, {}, IBoryProps>, res: Response) => {
-  
+
   const { idEstacao, ...restoDoBody } = req.body;
 
   const bodyParaInserir = {
@@ -31,7 +31,7 @@ export const create = async (req: Request<{}, {}, IBoryProps>, res: Response) =>
 
   const result = await ReporteProvidedr.create(bodyParaInserir as any);
 
-  if(result instanceof Error) {
+  if (result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       errors: {
         default: result.message
@@ -39,23 +39,22 @@ export const create = async (req: Request<{}, {}, IBoryProps>, res: Response) =>
     });
   }
 
-    const dadosParaHistorico = {
-      nomeUsuario: req.query.nomeUsuario as string || "-", 
-      emailUsuario: req.query.emailUsuario as string || "-", 
-      fk_Estacao_id: idEstacao, 
-      descricao: "Reporte cadastrado"
-    };
-  
-    const createHistoricoResul = await HistoricoProvider.create(dadosParaHistorico);
-    console.log(createHistoricoResul);
-  
-    if (createHistoricoResul instanceof Error) {
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        errors: {
-          default: createHistoricoResul.message
-        }
-      });
-    }
+  const dadosParaHistorico = {
+    nomeUsuario: req.query.nomeUsuario as string || "-",
+    emailUsuario: req.query.emailUsuario as string || "-",
+    fk_Estacao_id: idEstacao,
+    descricao: "Reporte cadastrado"
+  };
+
+  const createHistoricoResul = await HistoricoProvider.create(dadosParaHistorico);
+
+  if (createHistoricoResul instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: createHistoricoResul.message
+      }
+    });
+  }
 
   return res.status(StatusCodes.CREATED).json(result);
 
