@@ -30,7 +30,8 @@ export const updateValidation = validation((getSchema) => ({
     uf: yup.string().required(),
     longitude: yup.string().required(),
     latitude: yup.string().required(),
-    idClassificacao: yup.number().required(),   
+    idClassificacao: yup.number().required(),  
+    indValidado: yup.boolean().required(), 
   })),
   query: getSchema<IQueryProps>(yup.object({
     nomeUsuario: yup.string().required(),
@@ -48,10 +49,9 @@ export const update = async (req: Request<IParamProps, any, IBodyProps, IQueryPr
   }
 
   const { idClassificacao, ...restoDoBody } = req.body;
-
   const bodyUptade = {
     ...restoDoBody,
-    fk_Classificacao_id: idClassificacao
+    fk_Classificacao_id: idClassificacao,
   };
 
   const result = await EstacaoProvider.updateById(req.params.id, bodyUptade);
@@ -66,7 +66,6 @@ export const update = async (req: Request<IParamProps, any, IBodyProps, IQueryPr
 
   const idDaEstacao = Number(req.params.id);
 
-  // 5. Pegamos os dados de req.query em vez de req.params
   const dadosParaHistorico = {
     nomeUsuario: req.query.nomeUsuario as string, 
     emailUsuario: req.query.emailUsuario as string, 
@@ -84,9 +83,6 @@ export const update = async (req: Request<IParamProps, any, IBodyProps, IQueryPr
       }
     });
   }
-
-  // Importante: status NO_CONTENT (204) não envia corpo de resposta. 
-  // O Express ignorará o ".json(result)" se o status for 204.
-  // Se quiser enviar o JSON de volta, mude para OK (200).
+  
   return res.status(StatusCodes.NO_CONTENT).send();
 }
