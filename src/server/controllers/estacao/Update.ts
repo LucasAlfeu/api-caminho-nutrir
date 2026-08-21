@@ -74,7 +74,6 @@ export const update = async (req: Request<IParamProps, any, IBodyProps, IQueryPr
   };
 
   const createHistoricoResul = await HistoricoProvider.create(dadosParaHistorico);
-  console.log(createHistoricoResul);
 
   if (createHistoricoResul instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

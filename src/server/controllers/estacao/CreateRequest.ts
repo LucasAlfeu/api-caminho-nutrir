@@ -22,8 +22,8 @@ export const createRequestValidation = validation((getSchema) => ({
     municipio: yup.string().required(),
     uf: yup.string().required(),
     idClassificacao: yup.number().default(0),
-    nomeUsuario: yup.string().required().min(3).max(300),
-    emailUsuario: yup.string().required().min(3).max(150),
+    nomeUsuario: yup.string().default("").optional(),
+    emailUsuario: yup.string().default("").optional(),
   }))
 }));
 
