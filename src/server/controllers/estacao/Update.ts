@@ -6,7 +6,10 @@ import { IEstacao } from "../../database/models";
 import { EstacaoProvider } from "../../database/providers/estacao";
 import { HistoricoProvider } from "../../database/providers/historico";
 
-export interface IBodyProps extends Omit<IEstacao, 'id'> { }
+export interface IBodyProps extends Omit<IEstacao, 'id' | 'descricao' | 'complemento'> {
+  descricao?: string | null;
+  complemento?: string | null;
+}
 
 export interface IParamProps {
   id?: number;
@@ -20,12 +23,16 @@ export interface IQueryProps {
 export const updateValidation = validation((getSchema) => ({
   body: getSchema<IBodyProps>(yup.object({
     nome: yup.string().required().min(3).max(150),
-    descricao: yup.string().default("").optional().max(300),
+    
+    descricao: yup.string().nullable().default("").optional().max(300), 
+    
     cep: yup.string().required().min(8).max(8),
     logradouro: yup.string().required(),
     bairro: yup.string().required(),
     numero: yup.string().required(),
-    complemento: yup.string().default("").optional(),
+    
+    complemento: yup.string().nullable().default("").optional(), 
+    
     municipio: yup.string().required(),
     uf: yup.string().required(),
     longitude: yup.string().required(),
@@ -48,9 +55,12 @@ export const update = async (req: Request<IParamProps, any, IBodyProps, IQueryPr
     });
   }
 
-  const { idClassificacao, ...restoDoBody } = req.body;
+  const { idClassificacao, descricao, complemento, ...restoDoBody } = req.body;
+
   const bodyUptade = {
     ...restoDoBody,
+    descricao: descricao ?? '',
+    complemento: complemento ?? '',
     fk_Classificacao_id: idClassificacao,
   };
 

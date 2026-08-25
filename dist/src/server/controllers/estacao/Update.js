@@ -42,12 +42,12 @@ const historico_1 = require("../../database/providers/historico");
 exports.updateValidation = (0, Validation_1.validation)((getSchema) => ({
     body: getSchema(yup.object({
         nome: yup.string().required().min(3).max(150),
-        descricao: yup.string().default("").optional().max(300),
+        descricao: yup.string().nullable().default("").optional().max(300),
         cep: yup.string().required().min(8).max(8),
         logradouro: yup.string().required(),
         bairro: yup.string().required(),
         numero: yup.string().required(),
-        complemento: yup.string().default("").optional(),
+        complemento: yup.string().nullable().default("").optional(),
         municipio: yup.string().required(),
         uf: yup.string().required(),
         longitude: yup.string().required(),
@@ -68,9 +68,11 @@ const update = async (req, res) => {
             }
         });
     }
-    const { idClassificacao, ...restoDoBody } = req.body;
+    const { idClassificacao, descricao, complemento, ...restoDoBody } = req.body;
     const bodyUptade = {
         ...restoDoBody,
+        descricao: descricao ?? '',
+        complemento: complemento ?? '',
         fk_Classificacao_id: idClassificacao,
     };
     const result = await estacao_1.EstacaoProvider.updateById(req.params.id, bodyUptade);

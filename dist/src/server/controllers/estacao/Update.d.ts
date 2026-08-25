@@ -1,6 +1,8 @@
 import type { Request, Response } from "express";
 import { IEstacao } from "../../database/models";
-export interface IBodyProps extends Omit<IEstacao, 'id'> {
+export interface IBodyProps extends Omit<IEstacao, 'id' | 'descricao' | 'complemento'> {
+    descricao?: string | null;
+    complemento?: string | null;
 }
 export interface IParamProps {
     id?: number;
