@@ -1,0 +1,1 @@
+{"version":3,"file":"0001_create-bancoLeite.d.ts","sourceRoot":"","sources":["../../../../../src/server/database/migrations/0001_create-bancoLeite.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,IAAI,EAAE,MAAM,MAAM,CAAC;AAK5B,wBAAsB,EAAE,CAAC,IAAI,EAAC,IAAI,iBAiBjC;AAED,wBAAsB,IAAI,CAAC,IAAI,EAAC,IAAI,iBAInC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"0000_create_usuario.d.ts","sourceRoot":"","sources":["../../../../../src/server/database/migrations/0000_create_usuario.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,IAAI,EAAE,MAAM,MAAM,CAAC;AAIjC,wBAAsB,EAAE,CAAC,IAAI,EAAE,IAAI,iBAalC;AAGD,wBAAsB,IAAI,CAAC,IAAI,EAAE,IAAI,iBAKpC"}

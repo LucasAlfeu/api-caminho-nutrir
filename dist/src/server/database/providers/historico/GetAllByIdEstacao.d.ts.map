@@ -1,0 +1,1 @@
+{"version":3,"file":"GetAllByIdEstacao.d.ts","sourceRoot":"","sources":["../../../../../../src/server/database/providers/historico/GetAllByIdEstacao.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,UAAU,EAAE,MAAM,cAAc,CAAC;AAG1C,eAAO,MAAM,iBAAiB,GAAU,IAAI,MAAM,KAChD,OAAO,CAAC,IAAI,CAAC,UAAU,EAAE,IAAI,GAAG,MAAM,GAAG,WAAW,GAAG,aAAa,GAAG,cAAc,CAAC,EAAE,GAAG,KAAK,CAcjG,CAAA"}

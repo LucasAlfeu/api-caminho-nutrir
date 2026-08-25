@@ -1,8 +1,7 @@
-import type { Request, RequestHandler, Response } from "express";
+import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import * as yup from 'yup'
+import * as yup from 'yup';
 import { validation } from "../../shared/middlewares/Validation";
-import { EstacaoProvider } from "../../database/providers/estacao";
 import { ReporteProvidedr } from "../../database/providers/reporte";
 import { HistoricoProvider } from "../../database/providers/historico";
 
@@ -27,7 +26,11 @@ export const deleteByIdValidation = validation((getSchema) => ({
   }))
 }));
 
-export const deleteById = async (req: Request<IParamProps, {}, {}, IQueryProps>, res: Response) => {
+// 1. Voltamos o Request apenas com IParamProps para o Express (router) não reclamar
+export const deleteById = async (req: Request<IParamProps>, res: Response) => {
+
+  // 2. Avisamos ao TypeScript que a query já foi validada e convertida pelo Yup
+  const query = req.query as unknown as IQueryProps;
 
   if(!req.params.id) {
     return res.status(StatusCodes.BAD_REQUEST).json({
@@ -37,7 +40,8 @@ export const deleteById = async (req: Request<IParamProps, {}, {}, IQueryProps>,
     });
   }
 
-  const idEstacao = req.query.idEstacao;
+  // 3. Agora usamos a variável 'query' que acabamos de tipar
+  const idEstacao = query.idEstacao;
 
   if (!idEstacao) {
     return res.status(StatusCodes.BAD_REQUEST).json({
@@ -48,8 +52,8 @@ export const deleteById = async (req: Request<IParamProps, {}, {}, IQueryProps>,
   }
     
   const dadosParaHistorico = {
-    nomeUsuario: req.query.nomeUsuario || "-",
-    emailUsuario: req.query.emailUsuario || "-",
+    nomeUsuario: query.nomeUsuario || "-",
+    emailUsuario: query.emailUsuario || "-",
     fk_Estacao_id: idEstacao,
     descricao: "Reporte finalizado"
   };

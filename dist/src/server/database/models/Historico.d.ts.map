@@ -1,0 +1,1 @@
+{"version":3,"file":"Historico.d.ts","sourceRoot":"","sources":["../../../../../src/server/database/models/Historico.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,UAAU;IACzB,EAAE,EAAE,MAAM,CAAC;IACX,IAAI,CAAC,EAAE,GAAG,CAAC;IACX,SAAS,EAAE,MAAM,CAAC;IAClB,WAAW,EAAE,MAAM,CAAC;IACpB,YAAY,CAAC,EAAE,MAAM,CAAC;IACtB,SAAS,EAAE,MAAM,CAAA;CAClB"}
