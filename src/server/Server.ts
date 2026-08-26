@@ -7,9 +7,7 @@ import { router } from './routes/index';
 
 const server = express();
 
-server.use(cors({
-  origin: process.env.URL_API
-}))
+server.use(cors());
 server.use(express.json())
 server.use(router)
 

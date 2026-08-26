@@ -11,9 +11,7 @@ require("./shared/service/TraducoesYup");
 const index_1 = require("./routes/index");
 const server = (0, express_1.default)();
 exports.server = server;
-server.use((0, cors_1.default)({
-    origin: process.env.URL_API
-}));
+server.use(cors());
 server.use(express_1.default.json());
 server.use(index_1.router);
 //# sourceMappingURL=Server.js.map
