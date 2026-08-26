@@ -17,9 +17,13 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
     //   query.andWhereRaw('"indValidado" = ?', [indValidado ? 1 : 0]);
     // }
 
+    console.log("buscou")
+
     const result = await query
       .offset((page - 1) * limit)
       .limit(limit);
+
+    console.log("buscou", result)
 
     return result;
   } catch (error) {
