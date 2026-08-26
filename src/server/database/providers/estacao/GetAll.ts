@@ -32,7 +32,7 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
 
     return result;
   } catch (error) {
-    console.error(error);
-    return new Error('Erro ao consultar os registros');
+    console.error("ERRO COMPLETO DO KNEX/POSTGRES:", error); // <-- Altere para isso
+    return error as Error; // <-- Retorna o erro real para o controller exibir na resposta HTTP
   }
 };

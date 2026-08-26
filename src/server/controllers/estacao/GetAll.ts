@@ -39,12 +39,22 @@ export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Respons
   const count = await EstacaoProvider.count(req.query.filter);
 
   if (result instanceof Error) {
-    console.error("Erro no EstacaoProvider.getAll:", result.message);
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ errors: { default: result.message } });
+    console.error("DETALHE DO ERRO NO ESTACAO PROVIDER:", result);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ 
+      errors: { 
+        default: result.message,
+        stack: result.stack 
+      } 
+    });
   } else if (count instanceof Error) {
-    console.error("Erro no EstacaoProvider.count:", count.message);
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ errors: { default: count.message } });
-  }
+    console.error("DETALHE DO ERRO NO COUNT:", count);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ 
+      errors: { 
+        default: count.message,
+        stack: count.stack 
+      } 
+    });
+  } 
 
   const resultCompleto = await Promise.all(result.map(async (estacao: any) => {
     
@@ -57,7 +67,6 @@ export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Respons
 
     const dataUltimaInsercao = historicoReverso.length > 0 ? historicoReverso[0].data : null;
 
-    // CORREÇÃO: Usando a chave estrangeira correta da tabela no banco (fk_Classificacao_id)
     const getCategoria = await ClassificacaoProvider.getById(estacao.fk_Classificacao_id);
 
     let categoria: any = null;
