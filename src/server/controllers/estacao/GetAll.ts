@@ -1,16 +1,14 @@
-import type { Request, RequestHandler, Response } from "express";
+import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import * as yup from 'yup'
+import * as yup from 'yup';
 import { validation } from "../../shared/middlewares/Validation";
 import { EstacaoProvider } from "../../database/providers/estacao";
 import { HistoricoProvider } from "../../database/providers/historico";
 import { ClassificacaoProvider } from "../../database/providers/classificacao";
-import { IClassificacao } from "../../database/models";
 import { ReporteProvidedr } from "../../database/providers/reporte";
 
-
 export interface IQueryProps {
-  id?: number | undefined
+  id?: number | undefined;
   page?: number | any;
   limit?: number | any;
   filter?: string | undefined;
@@ -40,13 +38,15 @@ export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Respons
   
   const count = await EstacaoProvider.count(req.query.filter);
 
-  if(result instanceof Error) {
+  if (result instanceof Error) {
+    console.error("Erro no EstacaoProvider.getAll:", result.message);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ errors: { default: result.message } });
   } else if (count instanceof Error) {
+    console.error("Erro no EstacaoProvider.count:", count.message);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ errors: { default: count.message } });
   }
 
-  const resultCompleto = await Promise.all(result.map(async (estacao) => {
+  const resultCompleto = await Promise.all(result.map(async (estacao: any) => {
     
     const recuperaHistorico = await HistoricoProvider.getAllByIdEstacao(estacao.id);
     
@@ -57,18 +57,20 @@ export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Respons
 
     const dataUltimaInsercao = historicoReverso.length > 0 ? historicoReverso[0].data : null;
 
-    const getCategoria = await ClassificacaoProvider.getById(estacao.idClassificacao);
+    // CORREÇÃO: Usando a chave estrangeira correta da tabela no banco (fk_Classificacao_id)
+    const getCategoria = await ClassificacaoProvider.getById(estacao.fk_Classificacao_id);
 
-    let categoria: any;
+    let categoria: any = null;
     if (!(getCategoria instanceof Error)) {
       categoria = getCategoria;
     }
 
-    const { fk_Classificacao_id, idClassificacao, ...estacaoFormatada } = estacao as any;
+    const { fk_Classificacao_id, idClassificacao, ...estacaoFormatada } = estacao;
 
-    const recuperaReporte = await ReporteProvidedr.getAllById(estacao.id)
+    const recuperaReporte = await ReporteProvidedr.getAllById(estacao.id);
     
     if (recuperaReporte instanceof Error) {
+      console.error("Erro ao recuperar reportes:", recuperaReporte.message);
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         errors: {
           default: recuperaReporte.message
@@ -90,4 +92,4 @@ export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Respons
   res.setHeader('Access-Control-Expose-Headers', 'x-total-count');
 
   return res.status(StatusCodes.OK).json(resultCompleto);
-}
+};
