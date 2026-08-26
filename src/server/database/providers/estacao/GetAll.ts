@@ -4,31 +4,22 @@ import { ETableNames } from "../../ETable";
 
 export const getAll = async (page: number, limit: number, filter: string, id = 0, indValidado?: boolean): Promise<IEstacao[] | Error> => {
   try {
-    const result = await Knex(ETableNames.estacao)
-      .select("*", Knex.raw('"fk_Classificacao_id" as "idClassificacao"'))
-      .where(qb => {
-        if (id > 0) {
-            qb.where('id', id).orWhere('nome', 'like', `%${filter}%`);
-        } else {
-            qb.where('nome', 'like', `%${filter}%`);
-        }
-      })
-      .modify(qb => {
-        if (indValidado !== undefined) {
-          qb.andWhereRaw('"indValidado" = ?', [indValidado ? 1 : 0]);
-        }
-      })
+    const query = Knex(ETableNames.estacao)
+      .select("*", Knex.raw('"fk_Classificacao_id" as "idClassificacao"'));
+
+    // Filtra por nome apenas se houver texto digitado
+    if (filter && filter.trim() !== '') {
+      query.where('nome', 'like', `%${filter}%`);
+    }
+
+    // Filtra pelo status de validação se ele foi enviado na requisição
+    if (indValidado !== undefined) {
+      query.andWhereRaw('"indValidado" = ?', [indValidado ? 1 : 0]);
+    }
+
+    const result = await query
       .offset((page - 1) * limit)
       .limit(limit);
-
-    if (id > 0 && result.every((item: IEstacao) => item.id !== id)) {
-      const resultById = await Knex(ETableNames.estacao)
-        .select("*", Knex.raw('"fk_Classificacao_id" as "idClassificacao"'))
-        .where('id', '=', id)
-        .first();
-      
-      if (resultById) return [...result, resultById];
-    }
 
     return result;
   } catch (error) {
