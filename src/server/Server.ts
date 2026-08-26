@@ -13,4 +13,6 @@ server.use(cors({
 server.use(express.json())
 server.use(router)
 
-export { server };
+// export { server };
+
+export default server;
