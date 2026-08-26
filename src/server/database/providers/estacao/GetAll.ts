@@ -15,7 +15,7 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
       })
       .modify(qb => {
         if (indValidado !== undefined) {
-          qb.andWhere('indvalidado', indValidado ? 1 : 0);
+          qb.andWhereRaw('"indValidado" = ?', [indValidado ? 1 : 0]);
         }
       })
       .offset((page - 1) * limit)
