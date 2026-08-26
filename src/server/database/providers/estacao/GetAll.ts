@@ -1,11 +1,11 @@
-import { Knex } from "../../knex"
+import { Knex } from "../../knex";
 import { IEstacao } from "../../models";
 import { ETableNames } from "../../ETable";
 
 export const getAll = async (page: number, limit: number, filter: string, id = 0, indValidado?: boolean): Promise<IEstacao[] | Error> => {
   try {
     const result = await Knex(ETableNames.estacao)
-      .select("*", '"fk_Classificacao_id" as idClassificacao')
+      .select("*", 'fk_classificacao_id as idClassificacao')
       .where(qb => {
         if (id > 0) {
             qb.where('id', id).orWhere('nome', 'like', `%${filter}%`);
@@ -15,7 +15,7 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
       })
       .modify(qb => {
         if (indValidado !== undefined) {
-          qb.andWhere('"indValidado"', indValidado ? 1 : 0);
+          qb.andWhere('indvalidado', indValidado ? 1 : 0);
         }
       })
       .offset((page - 1) * limit)
@@ -23,7 +23,7 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
 
     if (id > 0 && result.every((item: IEstacao) => item.id !== id)) {
       const resultById = await Knex(ETableNames.estacao)
-        .select("*", '"fk_Classificacao_id" as idClassificacao')
+        .select("*", 'fk_classificacao_id as idClassificacao')
         .where('id', '=', id)
         .first();
       
@@ -32,7 +32,7 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
 
     return result;
   } catch (error) {
-    console.error("ERRO COMPLETO DO KNEX/POSTGRES:", error); // <-- Altere para isso
-    return error as Error; // <-- Retorna o erro real para o controller exibir na resposta HTTP
+    console.error("ERRO COMPLETO DO KNEX/POSTGRES:", error);
+    return error as Error;
   }
 };
