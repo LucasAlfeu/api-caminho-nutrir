@@ -8,14 +8,14 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
       .select("*", Knex.raw('"fk_Classificacao_id" as "idClassificacao"'));
 
     // Filtra por nome apenas se houver texto digitado
-    if (filter && filter.trim() !== '') {
-      query.where('nome', 'like', `%${filter}%`);
-    }
+    // if (filter && filter.trim() !== '') {
+    //   query.where('nome', 'like', `%${filter}%`);
+    // }
 
-    // Filtra pelo status de validação se ele foi enviado na requisição
-    if (indValidado !== undefined) {
-      query.andWhereRaw('"indValidado" = ?', [indValidado ? 1 : 0]);
-    }
+    // // Filtra pelo status de validação se ele foi enviado na requisição
+    // if (indValidado !== undefined) {
+    //   query.andWhereRaw('"indValidado" = ?', [indValidado ? 1 : 0]);
+    // }
 
     const result = await query
       .offset((page - 1) * limit)
