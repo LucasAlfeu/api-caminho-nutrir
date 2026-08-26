@@ -13,9 +13,9 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
     }
 
     // Filtra pelo status de validação se ele foi enviado na requisição (equivalente ao "indValidado" = ? do SQL)
-    // if (indValidado !== undefined) {
-    //   query.andWhereRaw('"indValidado" = ?', [indValidado ? 1 : 0]);
-    // }
+    if (indValidado !== undefined) {
+      query.andWhereRaw('"indValidado" = ?', [indValidado ? 1 : 0]);
+    }
 
     console.log("buscou")
 
