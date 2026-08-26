@@ -5,12 +5,12 @@ import { ETableNames } from "../../ETable";
 export const getAll = async (page: number, limit: number, filter: string, id = 0, indValidado?: boolean): Promise<IEstacao[] | Error> => {
   try {
     const result = await Knex(ETableNames.estacao)
-      .select("*", 'fk_classificacao_id as idClassificacao')
+      .select("*", Knex.raw('"fk_Classificacao_id" as "idClassificacao"'))
       .where(qb => {
         if (id > 0) {
-            qb.where('id', id).orWhere('nome', 'like', `%${filter}%`);
+          qb.where('id', id).orWhere('nome', 'like', `%${filter}%`);
         } else {
-            qb.where('nome', 'like', `%${filter}%`);
+          qb.where('nome', 'like', `%${filter}%`);
         }
       })
       .modify(qb => {
@@ -26,7 +26,7 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
         .select("*", 'fk_classificacao_id as idClassificacao')
         .where('id', '=', id)
         .first();
-      
+
       if (resultById) return [...result, resultById];
     }
 
