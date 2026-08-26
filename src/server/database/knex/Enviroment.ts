@@ -24,13 +24,15 @@ export const test: Knex.Config = {
 }
 
 export const production: Knex.Config = {
-  ...development,
+  client: 'pg', 
+  migrations: {
+    directory: path.resolve(__dirname, '..', 'migrations')
+  },
+  seeds: {
+    directory: path.resolve(__dirname, '..', 'seeds')
+  },
   connection: {
-    host: process.env.BD_HOST as string,
-    user: process.env.BD_USER as string,
-    password: process.env.BD_PASSWORD as string,
-    database: process.env.BD_NAME as string,
-    port: Number(process.env.BD_PORT ?? 3306),
+    connectionString: process.env.DATABASE_URL || process.env.POSTGRES_URL,
     ssl: { rejectUnauthorized: false }
   }
 }
